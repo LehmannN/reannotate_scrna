@@ -11,7 +11,7 @@
 | Create bigWig coverage files | [BEDTools](https://bedtools.readthedocs.io/en/latest/) | `BAM` <br> `GTF` | `bigWig` |
 | Assign reads to genes | [featureCounts](http://subread.sourceforge.net/) | `BAM` <br> `GTF` | `BAM` |
 | Count unique reads per genes per cell | [UMI-tools](https://github.com/CGATOxford/UMI-tools) | `BAM` | `count_matrix.txt` |
-| Create rds object (Seurat, SCE or CDS) | Rscript | BAM | `raw_seurat.rds` <br> `raw_sce.rds` <br> `raw_cds.rds` |
+| Create rds object (Seurat, SCE or CDS) | Rscript | `BAM` | `raw_seurat.rds` <br> `raw_sce.rds` <br> `raw_cds.rds` |
 
 ## Quickstart
 
