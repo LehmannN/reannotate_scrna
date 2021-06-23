@@ -29,8 +29,8 @@ $ nextflow run . -profile template --threads 4 --output output
 
 Option | Description
 --------- | -----------
-help | `Display help message.`
-threads | `Number of threads to use for each process.`
-output | `Directory to write output files to.`
+`help` | Display help message
+`threads` | Number of threads to use for each process
+`output` | Directory to write output files to
 
 ## Citation
