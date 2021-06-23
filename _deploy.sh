@@ -1,16 +1,17 @@
 #!/bin/sh
 
 set -e
+commitMessage=$1
+if [ $# -eq 0 ]
+then
+	echo "You must supply a commit message as an argument"
+	echo "Example command:"
+	echo "   m=\"Your commit message\""
+	echo "   bash _deploy.sh \"\$m\""
+	echo
+	exit
+fi
 
-[ -z "${GITHUB_PAT}" ] && exit 0
-[ "${TRAVIS_BRANCH}" != "master" ] && exit 0
-
-git config --global user.email "your mail"
-git config --global user.name "your name"
-
-git clone -b gh-pages https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git book-output
-cd book-output
-cp -r ../_book/* ./
-git add --all *
-git commit -m"Update the book" || true
-git push -q origin gh-pages
+git add * || true
+git commit -m "${commitMessage}" || true
+git push origin master

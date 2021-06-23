@@ -1,32 +1,37 @@
-# reannotate_scrna
+# scAnnotatiONT tool and pipeline
 
-Reannotation of chicken genome with scRNA-seq and long reads ONT
+## Introduction
 
-Started on 2020-07-24.
+## Pipeline summary
 
-## Directory structure
+| Step | Tool | Input | Output |
+| -------- | -------- | -------- | -------- |
+| Transcript assembly | - StringTie2 | BAM + GTF | BAM |
+| | - Scallop | | |
+| Compare novel annotations with reference | gffcompare | GTF | summary.txt |
+| Create bigWig coverage files | BEDTools | BAM + GTF | BAM |
+| Assign reads to genes | featureCounts | BAM + GTF | BAM |
+| Count unique reads per genes per cell | UMI-tools | BAM | count_matrix.txt |
+| Create Seurat object | Rscript | BAM | count_matrix.txt |
 
-* **src** - Reusable code (functions etc.)
-* **analysis** - R Markdown analysis files
-* **docs** - Rendered analysis reports
-* **data** - Raw data used for analysis
-* **output** - Output files
+## Quickstart
 
-## Data
+### Prerequisites
+  - Nextflow
+  - Java 1.7+
+  - Docker
 
-Input data files include:
+### Usage
 
-## Analysis
+```bash
+$ nextflow run . -profile template --threads 4 --output output
+```
+### Pipeline Options
 
-Current analysis files include:
+Option | Description
+--------- | -----------
+help | `Display help message.`
+threads | `Number of threads to use for each process.`
+output | `Directory to write output files to.`
 
-* **template.Rmd** - Analysis template
-
-## Code
-
-Current code files include:
-
-## Output
-
-Output files (not in repository but created by analysis files):
-
+## Citation
