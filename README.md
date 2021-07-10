@@ -24,12 +24,12 @@
 ### Prerequisites
   - Nextflow
   - Java 1.7+
-  - Docker
+  - Singularity
 
 ### Usage
 
 ```bash
-$ nextflow run . -profile template --threads 4 --output output
+$ nextflow run . -profile singularity --threads 4 --output output
 ```
 ### Pipeline Options
 
