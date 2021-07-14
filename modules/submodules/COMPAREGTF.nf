@@ -4,10 +4,10 @@ include { gffcompare } from '../processes/gffcompare'
 
 workflow COMPAREGTF {
     take:
-        ref
-        gtf
+        gtfREF
+        gtfNOVEL
 
     main:
-        gffcompare(ref, gtf)
+        gffcompare(gtfREF, gtfNOVEL)
 
 }

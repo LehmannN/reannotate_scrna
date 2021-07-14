@@ -1,5 +1,108 @@
 #!/usr/bin/env nextflow
 
+nextflow.enable.dsl=2
+
+/*
+ * 0. Channels declaration
+ */
+
+annotStrategy = 'stringtie'
+mergeStrategy = 'agat'
+
+/*
+ * 1. Construct novel annotation
+ */
+
+process createNovelAnnotationONT {
+
+    tag "Create novel annotation with $annotStrategy"
+
+    output:
+    publishDir "${params.outDir}/step1_createAnnotation",
+        mode: 'copy'
+    path "novelAnnotationOnt.gtf" into novelAnnot_ch
+
+    script:
+    if( annotStrategy == 'stringtie' )
+        """
+        stringtie -L -m 50 -g 50 -c 1 -s 2 -j 1 \
+            -p $params.threads \
+            -G $params.refAnnotation \
+            -o novelAnnotationOnt.gtf \
+            $params.bamOnt
+        """
+    else if( annotStrategy == 'scallop' )
+        """
+        scallop -i $params.bamOnt \
+            -o novelAnnotationOnt.gtf \
+            $params.config.scallop
+        """
+    else
+        error "Invalid annotation strategy"
+
+}
+
+/*
+ * 1.bis cat 
+ */
+
+process createListGTF {
+
+    tag "Create listGTF"
+
+    input:
+    path novelAnnotationOnt from novelAnnot_ch
+
+    output:
+    publishDir "${params.outDir}/step1_createAnnotation",
+        mode: 'copy'
+    path "listGTFs.txt" into listGTFs_ch
+
+    script:
+    """
+    echo "${PWD}/${params.outDir}/step1_createAnnotation/$novelAnnotationOnt" > listGTFs.txt
+    """
+
+}
+
+
+/*
+ * 2. Merge novel with ref
+ */
+
+process mergeNovelAndRef {
+
+    tag "Merge $params.refAnnotation and $novelAnnotationOnt"
+
+    input:
+    path novelAnnotationOnt from novelAnnot_ch
+    path listGTFs from listGTFs_ch
+
+    output:
+    publishDir "${params.outDir}/step2_mergeGTF",
+        mode: 'copy'
+    path "merged.gff" into mergedGTF_ch
+
+    script:
+    if( mergeStrategy == 'agat' )
+        """
+        agat_sp_merge_annotations.pl --gff $params.refAnnotation \
+            --gff $novelAnnotationOnt \
+            --output merged
+        """
+    else if( mergeStrategy == 'cuffmerge' )
+        """
+        cuffmerge -p $params.threads \
+            --min-isoform-fraction 0.05 \
+            --ref-gtf $params.refAnnotation \
+            --ref-sequence $params.refGenome \
+            -o step2_mergeGTF \
+            $listGTFs
+        """
+    else
+        error "Invalid merging strategy"
+
+}
 
 /*
  * 3. Compare with reference

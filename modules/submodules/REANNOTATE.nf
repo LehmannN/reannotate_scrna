@@ -4,13 +4,13 @@ include { stringtie } from '../processes/stringtie'
 
 workflow REANNOTATE {
     take:
-        ref
+        gtfREF
         bamONT
 
     main:
-        stringtie(ref, bamONT)
+        stringtie(gtfREF, bamONT)
 
     emit:
-        novelGTF = stringtie.out
+        gtfNOVEL = stringtie.out
 
 }

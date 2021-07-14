@@ -1,9 +1,8 @@
 #!/usr/bin/env nextflow
 
-// Finished
 
 /*
- *  Compare 2 annotations files (GTF or GFF3)
+ * Compare 2 annotations files (GTF)
  */
 
 process gffcompare {
@@ -14,16 +13,16 @@ process gffcompare {
         pattern: 'gffcmp*'
 
     input:
-    file gtfREF
-    file gtfNOVEL
+    file ref
+    file gtf
 
     output:
     file "gffcmp*"
 
     script:
     """
-    gffcompare -r $gtfREF \
+    gffcompare -r $ref \
         -o gffcmp \
-        $gtfNOVEL
+        $gtf
     """
 }
