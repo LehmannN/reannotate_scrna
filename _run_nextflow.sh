@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-nextflow run workflow.nf --threads 60
+
+nextflow run main.nf -profile standard --threads 40 --workflow reannotation
