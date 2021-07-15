@@ -18,22 +18,29 @@ s c A n n o t a t i O N T    P I P E L I N E
  *  Main script
  */
 
-include { REANNOTATE } from './modules/submodules/REANNOTATE'
-include { COMPAREGTF } from './modules/submodules/COMPAREGTF'
+include { REANNOTATION } from './modules/submodules/REANNOTATION'
+include { MERGEGTF } from './modules/submodules/MERGEGTF'
+include { COMPAREGTF as COMPAREGTF_1 } from './modules/submodules/COMPAREGTF'
+include { COMPAREGTF as COMPAREGTF_2 } from './modules/submodules/COMPAREGTF'
+include { QUANTIF } from './modules/submodules/QUANTIF'
 
 workflow {
 
-	gtfREF = channel.fromPath( params.ref, checkIfExists: true )
+	gtfREF = channel.fromPath( params.gtfREF, checkIfExists: true )
 	bamONT = channel.fromPath( params.bamONT, checkIfExists: true )
+	genomeREF = channel.fromPath( params.genomeREF, checkIfExists: true )
+	bamScRNA = channel.fromPath( params.bamScRNA, checkIfExists: true )
 
     main:
     if( params.workflow == 'reannotation' ){
-        REANNOTATE(gtfREF, bamONT)
-        COMPAREGTF(gtfREF, REANNOTATE.out)
-    }
-    else if( params.workflow = 'compare' )
+        REANNOTATION(gtfREF, bamONT)
+        COMPAREGTF_1(gtfREF, REANNOTATION.out)
+        MERGEGTF(gtfREF, REANNOTATION.out, genomeREF)
+        COMPAREGTF_2(gtfREF, MERGEGTF.out)
+        QUANTIF(MERGEGTF.out, bamScRNA)
+        QUANTIF.out.countMatrix.view()
+    } else if( params.workflow = 'compare' )
         COMPAREGTF(gtfREF, params.ref2)
     else
         error "Please choose a proper worflow (e.g. reannotation, compare...)"
-
 }

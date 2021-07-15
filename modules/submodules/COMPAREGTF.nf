@@ -1,6 +1,6 @@
-params.outDir = 'output'
+#!/usr/bin/env nextflow
 
-include { gffcompare } from '../processes/gffcompare'
+include { compareGTF } from '../processes/gtf-processing/compareGTF'
 
 workflow COMPAREGTF {
     take:
@@ -8,6 +8,6 @@ workflow COMPAREGTF {
         gtfNOVEL
 
     main:
-        gffcompare(gtfREF, gtfNOVEL)
+        compareGTF(gtfREF, gtfNOVEL)
 
 }
