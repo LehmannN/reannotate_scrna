@@ -1,7 +1,5 @@
 #!/usr/bin/env nextflow
 
-// Finished
-
 /*
  *  Compare 2 annotations files (GTF or GFF3)
  */

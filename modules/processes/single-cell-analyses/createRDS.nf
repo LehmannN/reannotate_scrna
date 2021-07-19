@@ -1,32 +1,24 @@
 #!/usr/bin/env nextflow
 
+
 /*
- * Count features
+ *  Build RDS object out of single-cell count matrix
  */
 
-process countFeatures {
+process createRDS {
 
-    tag "FeatureCounts"
+    tag "createRDS"
+    publishDir "${params.outDir}/single-cell-analyses", mode: 'copy'
 
     input:
-    path novelAnnotMerged from mergedGTF_ch
+    file script
+    file counts
 
     output:
-    publishDir "${params.outDir}/step5_featureCounts",
-        mode: 'copy'
-    path "*featureCounts.bam" into featureCountsBAM_ch
-    path "*featureCounts.gtf*" into featureCountsGTF_ch
+    file 'matrix.rds'
 
     script:
     """
-	featureCounts -T ${params.threads} \
-        -F GTF \
-        -R BAM \
-        -t gene \
-        -g gene_id \
-        -s 1 \
-        -a $novelAnnotMerged \
-        -o featureCounts.gtf \
-        ${params.bamScrna}
+    Rscript --vanilla $script --input $counts --output matrix.rds
     """
 }

@@ -18,8 +18,7 @@ process sortBAMFiles {
 
     script:
     """
-	samtools sort -@ ${params.threads} $bam \
-        -o featureCountsBAMsorted.bam
+	samtools sort -@ ${params.threads} $bam -o featureCountsBAMsorted.bam
 	samtools index -@ ${params.threads} featureCountsBAMsorted.bam
     """
 }

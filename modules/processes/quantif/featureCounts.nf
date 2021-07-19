@@ -10,7 +10,7 @@ process featureCounts {
     publishDir "${params.outDir}/featureCounts", mode: 'copy'
 
     input:
-    file gtfNOVEL
+    file gtf
     file bamScRNA
 
     output:
@@ -24,7 +24,7 @@ process featureCounts {
         -t exon \
         -g gene_id \
         -s 1 \
-        -a $gtfNOVEL \
+        -a $gtf \
         -o featureCounts.gtf \
         $bamScRNA \
         1> featureCounts.stdout \

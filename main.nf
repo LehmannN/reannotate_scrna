@@ -23,6 +23,7 @@ include { MERGEGTF } from './modules/submodules/MERGEGTF'
 include { COMPAREGTF as COMPAREGTF_1 } from './modules/submodules/COMPAREGTF'
 include { COMPAREGTF as COMPAREGTF_2 } from './modules/submodules/COMPAREGTF'
 include { QUANTIF } from './modules/submodules/QUANTIF'
+include { createRDS } from './modules/processes/single-cell-analyses/createRDS'
 
 workflow {
 
@@ -30,6 +31,8 @@ workflow {
 	bamONT = channel.fromPath( params.bamONT, checkIfExists: true )
 	genomeREF = channel.fromPath( params.genomeREF, checkIfExists: true )
 	bamScRNA = channel.fromPath( params.bamScRNA, checkIfExists: true )
+	rscripts = channel.fromPath( './bin/R/*.R', checkIfExists: true, type: 'file')
+	matrix = channel.fromPath( './data/counts.tsv.gz', checkIfExists: true )
 
     main:
     if( params.workflow == 'reannotation' ){
@@ -39,8 +42,8 @@ workflow {
         COMPAREGTF_2(gtfREF, MERGEGTF.out)
         QUANTIF(MERGEGTF.out, bamScRNA)
         QUANTIF.out.countMatrix.view()
-    } else if( params.workflow = 'compare' )
-        COMPAREGTF(gtfREF, params.ref2)
+    } else if( params.workflow == 'rds' )
+        createRDS(rscripts.filter(~/.*createRDS.R/), matrix)
     else
         error "Please choose a proper worflow (e.g. reannotation, compare...)"
 }

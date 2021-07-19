@@ -1,32 +1,23 @@
 #!/usr/bin/env nextflow
 
+
 /*
- * Count features
+ *  Preprocess single-cell count matrix (filter cells, dimension reduction...)
  */
 
-process countFeatures {
+process preprocessRDS {
 
-    tag "FeatureCounts"
+    tag "preprocessRDS"
+    publishDir "${params.outDir}/single-cell-analyses", mode: 'copy'
 
     input:
-    path novelAnnotMerged from mergedGTF_ch
+    file rds
 
     output:
-    publishDir "${params.outDir}/step5_featureCounts",
-        mode: 'copy'
-    path "*featureCounts.bam" into featureCountsBAM_ch
-    path "*featureCounts.gtf*" into featureCountsGTF_ch
+    path rmd
 
     script:
     """
-	featureCounts -T ${params.threads} \
-        -F GTF \
-        -R BAM \
-        -t gene \
-        -g gene_id \
-        -s 1 \
-        -a $novelAnnotMerged \
-        -o featureCounts.gtf \
-        ${params.bamScrna}
+    Rscript --vanilla preprocessRDS.R --input rds
     """
 }
