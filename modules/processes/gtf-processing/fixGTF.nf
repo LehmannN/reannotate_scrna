@@ -2,27 +2,19 @@
 
 
 /*
- * Compare 2 annotations files (GTF)
+ *  Fix GTF
  */
 
-process gffcompare {
+process fixGTF {
 
-    tag "GffCompare"
-    publishDir "${params.outDir}/step3_gffcomp",
-        mode: 'copy',
-        pattern: 'gffcmp*'
+    tag "fixGTF"
+    publishDir "${params.outDir}/gtf-processing", mode: 'copy'
 
     input:
-    file ref
-    file gtf
 
     output:
-    file "gffcmp*"
 
     script:
     """
-    gffcompare -r $ref \
-        -o gffcmp \
-        $gtf
     """
 }

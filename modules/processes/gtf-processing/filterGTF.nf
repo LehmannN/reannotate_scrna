@@ -1,29 +1,20 @@
 #!/usr/bin/env nextflow
 
-// Finished
 
 /*
- *  Compare 2 annotations files (GTF or GFF3)
+ *  Filter GFTF
  */
 
-process gffcompare {
+process filterGTF {
 
-    tag "GffCompare"
-    publishDir "${params.outDir}/step3_gffcomp",
-        mode: 'copy',
-        pattern: 'gffcmp*'
+    tag "filterGTF"
+    publishDir "${params.outDir}/gtf-processing", mode: 'copy'
 
     input:
-    file gtfREF
-    file gtfNOVEL
 
     output:
-    file "gffcmp*"
 
     script:
     """
-    gffcompare -r $gtfREF \
-        -o gffcmp \
-        $gtfNOVEL
     """
 }

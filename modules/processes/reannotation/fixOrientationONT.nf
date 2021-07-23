@@ -2,27 +2,19 @@
 
 
 /*
- * Compare 2 annotations files (GTF)
+ *  Fix orientation of long-reads (only for ONT data)
  */
 
-process gffcompare {
+process fixOrientationONT {
 
-    tag "GffCompare"
-    publishDir "${params.outDir}/step3_gffcomp",
-        mode: 'copy',
-        pattern: 'gffcmp*'
+    tag "fixOrientationONT"
+    publishDir "${params.outDir}/reannotation", mode: 'copy'
 
     input:
-    file ref
-    file gtf
 
     output:
-    file "gffcmp*"
 
     script:
     """
-    gffcompare -r $ref \
-        -o gffcmp \
-        $gtf
     """
 }
