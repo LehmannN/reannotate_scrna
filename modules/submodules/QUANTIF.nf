@@ -8,9 +8,10 @@ workflow QUANTIF {
     take:
         gtf
         bam
+        feature
 
     main:
-        featureCounts(gtf, bam)
+        featureCounts(gtf, bam, feature)
         sortBAMFiles(featureCounts.out.flatten().last())
         buildCountMatrix(sortBAMFiles.out[0], sortBAMFiles.out[1])
 

@@ -12,6 +12,7 @@ process featureCounts {
     input:
     file gtf
     file bamScRNA
+    val feature
 
     output:
     path "*featureCounts.*"
@@ -21,7 +22,7 @@ process featureCounts {
 	featureCounts -T ${params.threads} \
         -F GTF \
         -R BAM \
-        -t exon \
+        -t $feature \
         -g gene_id \
         -s 1 \
         -a $gtf \

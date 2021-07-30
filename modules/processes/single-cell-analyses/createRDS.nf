@@ -8,7 +8,7 @@
 process createRDS {
 
     tag "createRDS"
-    publishDir "${params.outDir}/single-cell-analyses", mode: 'copy'
+    publishDir "${params.outDir}/scAnalyses", mode: 'copy'
 
     input:
     file script

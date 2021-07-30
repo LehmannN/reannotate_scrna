@@ -8,16 +8,17 @@
 process preprocessRDS {
 
     tag "preprocessRDS"
-    publishDir "${params.outDir}/single-cell-analyses", mode: 'copy'
+    publishDir "${params.outDir}/${rdsID}/scRNA", mode: 'copy'
 
     input:
-    file rds
+    file scRNA
+    tuple val(rdsID), file(rdsFile)
 
     output:
-    path rmd
+    file '*'
 
     script:
     """
-    Rscript --vanilla preprocessRDS.R --input rds
+    bash _build.sh $rdsFile $rdsID
     """
 }

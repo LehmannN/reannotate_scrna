@@ -1,0 +1,6 @@
+data/annotations/full/galGal6.ensGene.gtf exon outputDir_1 workDir_1
+data/annotations/full/galGal6.ensGene.gff3 gene outputDir_2 workDir_2
+data/annotations/full/galGal6.ncbiRefSeq.gtf exon outputDir_3 workDir_3
+data/annotations/full/galGal6.ncbiRefSeq.gff3 gene outputDir_4 workDir_4
+data/annotations/full/galGal6.refGene_fixed.gtf exon outputDir_5 workDir_5
+data/annotations/full/galGal6.refGene_fixed.gff3 gene outputDir_6 workDir_6

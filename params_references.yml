@@ -1,0 +1,12 @@
+GTF_references:
+    ["data/annotations/full/galGal6.ensGene.gtf",
+    "data/annotations/full/galGal6.ncbiRefSeq.gtf",
+    "data/annotations/full/galGal6.refGene_fixed.gtf"]
+RDS:
+    ["data/rds/ensGene.rds",
+    "data/rds/ncbiRefSeq.rds",
+    "data/rds/refGeneUCSC.gtf"]
+RMarkdown:
+    ["./bin/rmd_files",
+    "./bin/rmd_files",
+    "./bin/rmd_files"]

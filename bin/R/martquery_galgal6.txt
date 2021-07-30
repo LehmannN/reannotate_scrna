@@ -1,0 +1,1 @@
+/import/kg_csbws01/lehmann/annotation/scAnnotatiONT/data/biomart/martquery_galgal6.txt

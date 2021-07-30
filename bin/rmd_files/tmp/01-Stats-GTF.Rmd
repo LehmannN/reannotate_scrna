@@ -1,0 +1,138 @@
+# GTF stats
+
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+library(ggbreak)
+library(dplyr)
+library(data.table)
+library(parallel)
+```
+
+```{bash, eval=FALSE}
+sed -i 's/,//g' mikado.tsv
+```
+
+## General statistics
+The output of `mikado util stats` gives general statistics on the annotation file used for this worflow.
+
+```{r}
+gtf_stats <- read.csv(file = params$mikado_stats,
+					  header = TRUE,
+					  sep = '\t',
+					  row.names = 1,
+					  quote = "")
+```
+
+```{r}
+knitr::kable(gtf_stats, caption = "General statistics of GTF file")
+```
+
+
+## Gene lengths
+
+We extract *genes* features from the GFF3 file (see workflow for more details: GTF files do not include the *genes* features).
+This allow us to get gene lengths distribution for each annotation.
+
+```{r}
+gff3 <- rtracklayer::import('galGal6.ensGene.gff3')
+gff3 <- as.data.frame(gff3)
+genes <- gff3 %>% filter(type == 'gene')
+```
+
+```{r}
+knitr::kable(summary(genes$width))
+```
+
+### Histogram
+```{r}
+plots_colors <- brewer.pal(12, "Paired")
+
+plot1 <- ggplot(genes, aes(width)) +
+	geom_histogram(bins = 100, fill = plots_colors[2]) +
+	geom_vline(xintercept = log10(mean(genes$width)),
+			   linetype="dashed",
+			   size = 1,
+			   color = plots_colors[5]) +
+	labs(x = "", y = "", title = "Genes lengths") +
+	theme_minimal()
+plot1
+```
+
+### Histogram (log10)
+```{r}
+plot1 <- ggplot(genes, aes(log10(width))) +
+	geom_histogram(bins = 100, fill = plots_colors[9]) +
+	geom_vline(xintercept = log10(mean(genes$width)),
+			   linetype="dashed",
+			   size = 1,
+			   color = plots_colors[4]) +
+	labs(x = "", y = "", title = "Genes lengths (log10)") +
+	theme_minimal()
+plot1
+```
+
+### Boxplot
+```{r}
+plot1 <- ggplot(genes, aes(y = log10(width))) +
+	geom_boxplot( width = 0.2, fill = plots_colors[7]) +
+	geom_point(aes(x = 0, y = log10(mean(width))), colour = plots_colors[2], size = 4) +
+	labs(x = "", y = "", title = "Genes lengths (log10)") +
+	theme_minimal()
+plot1
+```
+
+
+## 3'UTR lengths
+
+```{r}
+gtf <- rtracklayer::import('galGal6.ensGene.gtf')
+gtf <- as.data.frame(gtf)
+gtf_3utr <- gtf %>% filter(type == "3UTR")
+nrow(gtf_3utr)
+```
+
+### Histogram
+```{r}
+plots_colors <- brewer.pal(12, "Paired")
+
+plot1 <- ggplot(gtf_3utr, aes(width)) +
+	geom_histogram(bins = 100, fill = plots_colors[2]) +
+	geom_vline(xintercept = mean(gtf_3utr$width),
+			   linetype="dashed",
+			   size = 1,
+			   color = plots_colors[5]) +
+	labs(x = "", y = "", title = "3'UTR lengths") +
+	theme_minimal()
+plot1
+```
+
+### Histogram (log10)
+```{r}
+plot1 <- ggplot(gtf_3utr, aes(log10(width))) +
+	geom_histogram(bins = 100, fill = plots_colors[9]) +
+	geom_vline(xintercept = log10(mean(gtf_3utr$width)),
+			   linetype="dashed",
+			   size = 1,
+			   color = plots_colors[4]) +
+	labs(x = "", y = "", title = "3'UTR lengths (log10)") +
+	theme_minimal()
+plot1
+```
+
+### Boxplot
+```{r}
+plot1 <- ggplot(gtf_3utr, aes(y = log10(width))) +
+	geom_boxplot( width = 0.2, fill = plots_colors[7]) +
+	geom_point(aes(x = 0, y = log10(mean(width))), colour = plots_colors[2], size = 4) +
+	labs(x = "", y = "", title = "3'UTR lengths (log10)") +
+	theme_minimal()
+plot1
+```
+
+
+## Comparison with reference
+We show here the results obtained with `GffCompare`.
+
+## Reads distance to closest 3'UTR
+

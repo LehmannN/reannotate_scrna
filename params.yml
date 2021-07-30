@@ -1,0 +1,3 @@
+gtfREF: ["galGal6.ncbiRefSeq.gtf", "galGal6.refGene_fixed.gtf"]
+rds: ["data/rds/matrix_ensGene.rds", "data/rds/matrix_ncbiRefSeq.rds", "data/rds/matrix_refGene_fixed.rds"]
+rmd: ["./bin/rmd_files", "./bin/rmd_files", "./bin/rmd_files"]

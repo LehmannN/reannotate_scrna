@@ -1,0 +1,403 @@
+# Data preprocessing
+
+```{r}
+library(Seurat)
+library(dplyr)
+library(scater)
+library(gridExtra)
+library(RColorBrewer)
+library(SeuratWrappers)
+library(tricycle)
+library(cowplot)
+library(viridis)
+library(scales)
+```
+
+We start by loading the Seurat object stored as a `RDS` object.
+It contains all the single-cell data.
+
+```{r}
+obj_seurat <- readRDS(file = params$rds)
+obj_seurat[["orig.ident"]] <- params$gtf
+Idents(obj_seurat) <- 'orig.ident'
+```
+
+At this step of the preprocessing, the data consists of `r ncol(obj_seurat)` cells
+and `r nrow(obj_seurat)` genes.
+Before going any further, we start by removing the genes that are not detected
+in our dataset (if any).
+
+```{r}
+obj_counts <- obj_seurat@assays$RNA@counts
+features_keep <- rowSums(obj_counts) > 1
+obj_seurat <- obj_seurat[features_keep, ]
+table(features_keep)
+```
+
+There are `r nrow(obj_seurat)` remaining genes (detected at least twice).
+We now load a BioMart query table obtained from [https://www.ensembl.org/biomart/martview](BioMart data mining tool).
+
+```{r}
+biomart <- read.table(file = 'biomart.txt',
+					  header = TRUE,
+					  sep= '\t')
+```
+
+## Calculate QC metrics
+
+### Cells metrics
+
+#### Mitochondrial genes
+```{r}
+genes_MT <- biomart %>%
+	filter(Chromosome.scaffold.name == "MT") %>%
+	filter(Gene.type == "protein_coding")
+
+features <- genes_MT[genes_MT$Gene.name %in% rownames(obj_seurat),'Gene.name']
+if (length(features) != 0) {
+	obj_seurat[["percent_MT"]] <- PercentageFeatureSet(obj_seurat,
+													   features = features)
+	print(genes_MT$Gene.name)
+} else {
+	obj_seurat[["percent_MT"]] <- 0
+}
+
+```
+
+#### Ribosomal genes
+```{r}
+obj_seurat[['percent_Ribo']] <- PercentageFeatureSet(obj_seurat,
+													 pattern = "^RP[SL]")
+```
+
+#### Blood associated genes
+```{r}
+obj_seurat[['percent_Hb']] <- PercentageFeatureSet(obj_seurat,
+												   pattern = "^HB[^(P)]")
+```
+
+#### Percent of zeros in each cell
+```{r}
+obj_seurat[['percent_Dropouts']] <- colSums(obj_counts == 0) / nrow(obj_counts)*100
+```
+
+### Features metrics
+
+```{r}
+obj_counts <- obj_seurat@assays$RNA@counts
+obj_seurat@assays$RNA@meta.features[['nCells_detected']] <- rowSums(obj_counts != 0)
+obj_seurat@assays$RNA@meta.features[['percentCells_detected']] <- rowSums(obj_counts != 0) / ncol(obj_counts)*100
+obj_seurat@assays$RNA@meta.features[['total_counts']] <- rowSums(obj_counts)
+obj_seurat@assays$RNA@meta.features[['log10_total_counts']] <- log10(rowSums(obj_counts))
+obj_seurat@assays$RNA@meta.features[['mean_counts']] <- rowMeans(obj_counts)
+obj_seurat@assays$RNA@meta.features[['log10_mean_counts']] <- log10(rowMeans(obj_counts))
+obj_seurat@assays$RNA@meta.features[['percent_Dropouts']] <- rowSums(obj_counts == 0) / ncol(obj_counts)*100
+```
+
+## Plot QC metrics
+### Cells metrics
+#### Violin plots
+```{r}
+metrics <- c("nFeature_RNA", "nCount_RNA", "percent_MT",
+			 "percent_Ribo", "percent_Hb", "percent_Dropouts")
+obj <- as.data.frame(obj_seurat@meta.data[, metrics])
+
+plots_colors <- brewer.pal(6, "Dark2")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = factor(0), y = metrics[i])) +
+		geom_violin(fill = plots_colors[i], alpha = 0.8) +
+		geom_boxplot(width = 0.2, outlier.size = 0.5, outlier.alpha = 0.8) +
+		labs(x = "", y = "", title = metrics[i]) +
+		scale_x_discrete(labels = NULL, breaks = NULL) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### Histograms
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	print(metrics[i])
+	print(summary(obj[,metrics[i]]))
+	mu <- mean(obj[,metrics[i]])
+	plots[[i]] <- ggplot(obj, aes_string(x = metrics[i])) +
+		geom_histogram(fill = plots_colors[i], alpha = 0.8, bins = 100) +
+		labs(x = "", y = "", title = metrics[i]) +
+		geom_vline(xintercept = mu, color = "black", linetype = "dashed", size = 0.8) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### nGenes against nCounts
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = "nCount_RNA",
+										 y = "nFeature_RNA",
+										 color = metrics[i])) +
+geom_point(size = 0.2, alpha = 0.8) +
+geom_rug(sides ="bl") +
+scale_colour_gradientn(colours = rainbow(3))
+}
+do.call(grid.arrange, plots)
+```
+
+
+### Genes metrics
+
+#### Violin plots
+```{r}
+metrics <- c("nCells_detected", "percentCells_detected", "total_counts", "log10_total_counts",
+			 "mean_counts", "log10_mean_counts", "percent_Dropouts")
+obj <- as.data.frame(obj_seurat@assays$RNA@meta.features[, metrics])
+
+plots_colors <- brewer.pal(7, "Dark2")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = factor(0), y = metrics[i])) +
+		geom_violin(fill = plots_colors[i], alpha = 0.8) +
+		geom_boxplot(width = 0.2, alpha = 0.3, outlier.size = 0.5, outlier.alpha = 0.8) +
+		labs(x = "", y = "", title = metrics[i]) +
+		scale_x_discrete(labels = NULL, breaks = NULL) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### Histograms
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	print(metrics[i])
+	print(summary(obj[,metrics[i]]))
+	mu <- mean(obj[,metrics[i]])
+	plots[[i]] <- ggplot(obj, aes_string(x = metrics[i])) +
+		geom_histogram(fill = plots_colors[i], alpha = 0.8, bins = 100) +
+		labs(x = "", y = "", title = metrics[i]) +
+		geom_vline(xintercept = mu, color = "black", linetype = "dashed", size = 0.8) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### nCells against nCounts
+```{r}
+metrics <- c("percent_Dropouts")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = "log10_total_counts",
+										 y = "nCells_detected",
+										 color = metrics[i])) +
+geom_point(size = 0.2, alpha = 0.8) +
+geom_rug(sides ="bl") +
+scale_colour_gradientn(colours = rev(rainbow(3)))
+}
+do.call(grid.arrange, plots)
+```
+
+
+### Highly expressed genes
+```{r}
+obj_sce <- as.SingleCellExperiment(obj_seurat)
+
+plotHighestExprs(obj_sce,
+				 n = 50,
+				 exprs_values = "counts",
+				 colour_cells_by = "percent_MT",
+				 as_percentage = TRUE)
+```
+
+## Filter data
+### Cells filtering
+#### By number of detected genes
+```{r}
+obj <- as.data.frame(obj_seurat@meta.data)
+quantile(obj$nFeature_RNA, probs = seq(0, 0.05, 0.01))
+cells_keep <- WhichCells(obj_seurat, expression = nFeature_RNA > 1000)
+obj_filt <- subset(obj_seurat, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+#### By mitochondrial genes
+```{r}
+quantile(obj$percent_MT, probs = seq(0.9, 1, 0.01))
+cells_keep <- WhichCells(obj_filt, expression = percent_MT < 20)
+obj_filt <- subset(obj_filt, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+#### Remove blood cells
+```{r}
+quantile(obj$percent_Hb, probs = seq(0.9, 1, 0.01))
+cells_keep <- WhichCells(obj_filt, expression = percent_Hb < 0.1)
+obj_filt <- subset(obj_filt, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+### Genes filtering
+```{r}
+min_genes <- 1
+min_cells <- 5
+features_keep <- which(rowSums(obj_counts[rowSums(obj_counts) >= min_genes,] != 0) >= min_cells)
+obj_filt <- subset(obj_filt, features = features_keep)
+```
+There are `r ncol(obj_filt)` remaining cells and `r nrow(obj_filt)` remaining genes.
+
+```{r}
+obj_seurat <- obj_filt
+```
+
+
+
+## Data preparation to get scores
+This preparation step includes normalization, scaling of the data and identification of variable genes,
+which are performed in order to infer scores on cells (such as cell cycle, doublets...).
+The normalization here is a simple log-normalization.
+A second normalization (with `SCTransform`), more robust to UMI-based datasets analyses, will be performed later on.
+```{r}
+obj_seurat <- NormalizeData(obj_seurat,
+							normalization.method = "LogNormalize",
+							scale.factor = 10000)
+obj_seurat <- ScaleData(obj_seurat,
+						features = rownames(obj_seurat))
+obj_seurat <- FindVariableFeatures(obj_seurat,
+								   selection.method = "vst")
+```
+
+It also includes an inspection of the PCs to select an adequate number of PCs.
+```{r}
+obj_seurat <- RunPCA(obj_seurat,
+					 features = VariableFeatures(object = obj_seurat),
+					 verbose = FALSE,
+					 npcs = 100)
+ElbowPlot(obj_seurat, ndims = 100)
+npc <- 25
+obj_seurat <- RunPCA(obj_seurat,
+					 features = VariableFeatures(object = obj_seurat),
+					 verbose = FALSE,
+					 npcs = npc)
+obj_seurat <- FindNeighbors(obj_seurat, dims = 1:npc) %>%
+	RunUMAP(dims = 1:npc)
+```
+
+## Identify poulations
+### Neurogenesis markers
+```{r}
+obj_counts <- obj_seurat@assays$RNA@counts
+obj_normcounts <- obj_seurat@assays$RNA@data
+obj_scaledcounts <- obj_seurat@assays$RNA@scale.data
+summary(obj_counts['SOX2',])
+summary(obj_normcounts['SOX2',])
+summary(obj_scaledcounts['SOX2',])
+
+obj_seurat@assays$RNA@meta.features[c('SOX2', 'TUBB3'), ]
+
+features <- c('SOX2', 'TUBB3')
+FeaturePlot(obj_seurat,
+			features = features,
+			dims = c(1, 2),
+			cols = c("grey90", brewer.pal(9,"YlGnBu")),
+			pt.size = 0.2,
+			ncol = 1)
+```
+
+## Assign scores
+### Discrete cell-cycle score (with Seurat)
+```{r}
+s.genes <- cc.genes[['s.genes']][which(cc.genes[['s.genes']] %in% rownames(obj_seurat))]
+g2m.genes <- cc.genes[['g2m.genes']][which(cc.genes[['g2m.genes']] %in% rownames(obj_seurat))]
+print(s.genes)
+print(g2m.genes)
+obj_seurat <- CellCycleScoring(obj_seurat,
+							   s.features = s.genes,
+							   g2m.features = g2m.genes,
+							   set.ident = FALSE)
+obj_seurat@meta.data$Phase <- as.factor(obj_seurat@meta.data$Phase)
+obj_seurat$CC.Difference <- obj_seurat$S.Score - obj_seurat$G2M.Score
+```
+
+```{r}
+plots_colors <- brewer.pal(3, "Accent")
+
+DimPlot(obj_seurat,
+		reduction = "umap",
+		dims = c(1, 2),
+		group.by = "Phase",
+		cols = plots_colors,
+		label = FALSE,
+		label.size = 4,
+		pt.size = 0.5)
+```
+
+```{r, eval=FALSE, echo=FALSE}
+obj_seurat <- ScaleData(obj_seurat, vars.to.regress = "CC.Difference", features = rownames(obj_seurat))
+obj_seurat <- RunPCA(obj_seurat, features = c(s.genes, g2m.genes))
+DimPlot(obj_seurat,
+		reduction = "pca",
+		dims = c(1, 2),
+		group.by = "Phase",
+		cols = plots_colors,
+		label = FALSE,
+		label.size = 4,
+		pt.size = 0.5)
+```
+
+```{r}
+# plot barplot of neurons / prog / neural crest
+# same with DV
+ggplot(obj_seurat[[]], aes(x = orig.ident, fill = Phase)) +
+	geom_bar(aes(y = (..count..)/sum(..count..))) +
+	scale_fill_viridis(discrete = T) +
+	theme_minimal() +
+	scale_y_continuous(labels = percent) +
+	labs(x = "", y = "")
+```
+
+## Second normalization
+From now-on, the data of the previous normalization will not be used anymore.
+
+```{r, warning = FALSE}
+obj_seurat <- SCTransform(object = obj_seurat,
+						  vars.to.regress = c("CC.Difference"),
+						  do.scale = TRUE,
+						  verbose = FALSE)
+```
+
+## Find variable genes
+
+```{r}
+obj_seurat <- FindVariableFeatures(obj_seurat, selection.method = "vst", nfeatures = 2000)
+top10 <- head(VariableFeatures(obj_seurat), 10)
+
+plot1 <- VariableFeaturePlot(obj_seurat)
+plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2
+```
+
+
+## Clustering
+
+```{r}
+obj_seurat <- RunPCA(obj_seurat, features = VariableFeatures(object = obj_seurat))
+obj_seurat <- FindNeighbors(obj_seurat, dims = 1:25)
+obj_seurat <- FindClusters(obj_seurat, resolution = 0.5)
+obj_seurat <- RunUMAP(obj_seurat, dims = 1:25)
+DimPlot(obj_seurat, reduction = "umap")
+```
+
+## Find DE genes
+```{r}
+obj_seurat_markers <- FindAllMarkers(obj_seurat, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+obj_seurat_markers %>%
+	group_by(cluster) %>%
+	top_n(n = 2, wt = avg_log2FC)
+
+obj_seurat_markers %>%
+	group_by(cluster) %>%
+	top_n(n = 10, wt = avg_log2FC) -> top10
+DoHeatmap(obj_seurat, features = top10$gene) + NoLegend()
+```
+
