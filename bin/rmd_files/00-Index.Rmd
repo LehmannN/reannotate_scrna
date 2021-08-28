@@ -1,5 +1,5 @@
 ---
-title: "Report title"
+title: "Report"
 author: "Nathalie Lehmann"
 date: "`r Sys.Date()`"
 output: bookdown::gitbook
@@ -27,8 +27,8 @@ knitr::write_bib(c(
 knitr::opts_chunk$set(
 					  fig.align = "center",
 					  fig.retina = 2,
-					  fig.width = 10,
-					  dev = "pdf",
+					  fig.fullwidth = TRUE,
+					  dev = c('png', 'pdf'),
 					  cache = TRUE,
 					  cache.lazy = FALSE,
 					  warning = FALSE,

@@ -1,0 +1,293 @@
+# Data pre-processing
+
+```{r}
+library(Seurat)
+library(dplyr)
+library(scater)
+library(gridExtra)
+library(RColorBrewer)
+library(cowplot)
+library(viridis)
+library(scales)
+library(SC3)
+```
+
+We start by loading the Seurat object stored as a `RDS` object.
+It contains all the single-cell data.
+
+```{r}
+obj_seurat <- readRDS(file = params$rds)
+obj_seurat[["orig.ident"]] <- params$gtf
+Idents(obj_seurat) <- 'orig.ident'
+```
+
+At this step of the pre-processing, the data consists of `r ncol(obj_seurat)` cells
+and `r nrow(obj_seurat)` genes.
+Before going any further, we start by removing the genes that are not detected
+in our dataset (if any).
+
+```{r}
+obj_counts <- obj_seurat@assays$RNA@counts
+features_keep <- rowSums(obj_counts) > 1
+obj_seurat <- obj_seurat[features_keep, ]
+table(features_keep)
+```
+
+There are `r nrow(obj_seurat)` remaining genes (detected at least twice).
+We now load a BioMart query table obtained from [https://www.ensembl.org/biomart/martview](BioMart data mining tool).
+
+```{r}
+biomart <- read.table(file = 'biomart.txt',
+					  header = TRUE,
+					  sep= '\t')
+```
+
+## Calculate QC metrics
+In the following sections, we calculate the value of standard cell metrics and store it in the Seurat object.
+
+
+### Cells metrics
+
+#### Mitochondrial genes
+```{r}
+genes_MT <- biomart %>%
+	filter(Chromosome.scaffold.name == "MT") %>%
+	filter(Gene.type == "protein_coding")
+
+features <- genes_MT[genes_MT$Gene.name %in% rownames(obj_seurat),'Gene.name']
+if (length(features) != 0) {
+	obj_seurat[["percent_MT"]] <- PercentageFeatureSet(obj_seurat,
+													   features = features)
+	print(genes_MT$Gene.name)
+} else {
+	obj_seurat[["percent_MT"]] <- 0
+}
+
+```
+
+#### Ribosomal genes
+```{r}
+obj_seurat[['percent_Ribo']] <- PercentageFeatureSet(obj_seurat,
+													 pattern = "^RP[SL]")
+```
+
+#### Blood associated genes
+```{r}
+obj_seurat[['percent_Hb']] <- PercentageFeatureSet(obj_seurat,
+												   pattern = "^HB[^(P)]")
+```
+
+#### Percent of zeros in each cell
+```{r}
+obj_seurat[['percent_Dropouts']] <- colSums(obj_counts == 0) / nrow(obj_counts)*100
+```
+
+### Features metrics
+
+We now store genes metadata (e.g. number of cells in which the gene is detected, percent of zero counts, etc.) in the Seurat object.
+
+```{r}
+obj_counts <- obj_seurat@assays$RNA@counts
+obj_seurat@assays$RNA@meta.features[['nCells_detected']] <- rowSums(obj_counts != 0)
+obj_seurat@assays$RNA@meta.features[['percentCells_detected']] <- rowSums(obj_counts != 0) / ncol(obj_counts)*100
+obj_seurat@assays$RNA@meta.features[['total_counts']] <- rowSums(obj_counts)
+obj_seurat@assays$RNA@meta.features[['log10_total_counts']] <- log10(rowSums(obj_counts))
+obj_seurat@assays$RNA@meta.features[['mean_counts']] <- rowMeans(obj_counts)
+obj_seurat@assays$RNA@meta.features[['log10_mean_counts']] <- log10(rowMeans(obj_counts))
+obj_seurat@assays$RNA@meta.features[['percent_Dropouts']] <- rowSums(obj_counts == 0) / ncol(obj_counts)*100
+```
+
+## Plot QC metrics
+### Cells metrics
+#### Violin plots
+```{r}
+metrics <- c("nFeature_RNA", "nCount_RNA", "percent_MT",
+			 "percent_Ribo", "percent_Hb", "percent_Dropouts")
+obj <- as.data.frame(obj_seurat@meta.data[, metrics])
+
+plots_colors <- brewer.pal(6, "Dark2")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = factor(0), y = metrics[i])) +
+		geom_violin(fill = plots_colors[i], alpha = 0.8) +
+		geom_boxplot(width = 0.2, outlier.size = 0.5, outlier.alpha = 0.8) +
+		labs(x = "", y = "", title = metrics[i]) +
+		scale_x_discrete(labels = NULL, breaks = NULL) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### Histograms
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	print(metrics[i])
+	print(summary(obj[,metrics[i]]))
+	mu <- mean(obj[,metrics[i]])
+	plots[[i]] <- ggplot(obj, aes_string(x = metrics[i])) +
+		geom_histogram(fill = plots_colors[i], alpha = 0.8, bins = 100) +
+		labs(x = "", y = "", title = metrics[i]) +
+		geom_vline(xintercept = mu, color = "black", linetype = "dashed", size = 0.8) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### nGenes against nCounts
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = "nCount_RNA",
+										 y = "nFeature_RNA",
+										 color = metrics[i])) +
+geom_point(size = 0.2, alpha = 0.8) +
+geom_rug(sides ="bl") +
+scale_colour_gradientn(colours = rainbow(3))
+}
+do.call(grid.arrange, plots)
+```
+
+
+### Genes metrics
+
+#### Violin plots
+```{r}
+metrics <- c("nCells_detected", "percentCells_detected", "total_counts", "log10_total_counts",
+			 "mean_counts", "log10_mean_counts", "percent_Dropouts")
+obj <- as.data.frame(obj_seurat@assays$RNA@meta.features[, metrics])
+
+plots_colors <- brewer.pal(7, "Dark2")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = factor(0), y = metrics[i])) +
+		geom_violin(fill = plots_colors[i], alpha = 0.8) +
+		geom_boxplot(width = 0.2, alpha = 0.3, outlier.size = 0.5, outlier.alpha = 0.8) +
+		labs(x = "", y = "", title = metrics[i]) +
+		scale_x_discrete(labels = NULL, breaks = NULL) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### Histograms
+```{r}
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	print(metrics[i])
+	print(summary(obj[,metrics[i]]))
+	mu <- mean(obj[,metrics[i]])
+	plots[[i]] <- ggplot(obj, aes_string(x = metrics[i])) +
+		geom_histogram(fill = plots_colors[i], alpha = 0.8, bins = 100) +
+		labs(x = "", y = "", title = metrics[i]) +
+		geom_vline(xintercept = mu, color = "black", linetype = "dashed", size = 0.8) +
+		theme_minimal()
+}
+do.call(grid.arrange, plots)
+```
+
+#### nCells against nCounts
+```{r}
+metrics <- c("percent_Dropouts")
+plots <- list()
+for (i in seq(1, length(metrics))) {
+	plots[[i]] <- ggplot(obj, aes_string(x = "log10_total_counts",
+										 y = "nCells_detected",
+										 color = metrics[i])) +
+geom_point(size = 0.2, alpha = 0.8) +
+geom_rug(sides ="bl") +
+scale_colour_gradientn(colours = rev(rainbow(3)))
+}
+do.call(grid.arrange, plots)
+```
+
+
+### Highly expressed genes
+```{r}
+obj_sce <- as.SingleCellExperiment(obj_seurat)
+
+plotHighestExprs(obj_sce,
+				 n = 50,
+				 exprs_values = "counts",
+				 colour_cells_by = "percent_MT",
+				 as_percentage = TRUE)
+```
+
+## Filter data
+### Cells filtering
+#### By number of detected genes
+
+For the sake of simplicity, we keep cells in which we detect at least 1000 genes.
+We use the same threshold for all the datasets.
+
+```{r}
+md_cells <- as.data.frame(obj_seurat@meta.data)
+
+table(md_cells$nFeature_RNA >= 1000)
+quantile(md_cells$nFeature_RNA, probs = seq(0, 0.05, 0.01))
+
+cells_keep <- WhichCells(obj_seurat, expression = nFeature_RNA >= 1000)
+obj_filt <- subset(obj_seurat, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+#### By mitochondrial genes
+
+We here remove cells that express 20% or more of mitochondrial genes compared to the total number of genes detected in each of them.
+We chose the 20% threshold due to the distribution observed above.
+
+```{r}
+table(md_cells$percent_MT < 20)
+quantile(md_cells$percent_MT, probs = seq(0.9, 1, 0.01))
+
+cells_keep <- WhichCells(obj_filt, expression = percent_MT < 20)
+obj_filt <- subset(obj_filt, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+#### Remove blood cells
+
+Blood cells are outliers in this dataset, so we need to remove them.
+For this purpose, we remove cells in which we detect 0.1% or more of blood associated genes (i.e. hemoglobin genes).
+
+```{r}
+table(md_cells$percent_Hb < 0.1)
+quantile(md_cells$percent_Hb, probs = seq(0.9, 1, 0.01))
+
+cells_keep <- WhichCells(obj_filt, expression = percent_Hb < 0.1)
+obj_filt <- subset(obj_filt, cells = cells_keep)
+```
+There are `r ncol(obj_filt)` remaining cells.
+
+
+### Genes filtering
+
+Finally, we filter the genes that are detected in less than 5 cells.
+```{r}
+min_genes <- 1
+min_cells <- 5
+features_keep <- which(rowSums(obj_counts[rowSums(obj_counts) >= min_genes,] != 0) >= min_cells)
+obj_filt <- subset(obj_filt, features = features_keep)
+```
+
+Finally, there are `r ncol(obj_filt)` remaining cells and `r nrow(obj_filt)` remaining genes.
+
+```{r}
+saveRDS(obj_seurat,
+        file = paste0("data/rds/", params$gtf, "_obj_seurat_unfiltered.rds"))
+
+# Save metadata on cells
+write.table(obj_seurat[[]],
+            file = paste0("data/raw/", params$gtf, "_cells_metadata_unfiltered.tsv"),
+            quote = FALSE,
+            sep = "\t")
+# Save metadata on genes
+write.table(obj_seurat@assays$RNA@meta.features,
+            file = paste0("data/raw/", params$gtf, "_genes_metadata_unfiltered.tsv"),
+            quote = FALSE,
+            sep = "\t")
+```
+
+```{r}
+obj_seurat <- obj_filt
+```

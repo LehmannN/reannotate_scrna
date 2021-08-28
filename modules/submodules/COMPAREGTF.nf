@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { compareGTF } from '../processes/gtf-processing/compareGTF'
+include { gffCompare } from '../processes/stats/gffCompare.nf'
 
 workflow COMPAREGTF {
     take:
@@ -8,6 +8,6 @@ workflow COMPAREGTF {
         gtfNOVEL
 
     main:
-        compareGTF(gtfREF, gtfNOVEL)
+        gffCompare(gtfREF, gtfNOVEL)
 
 }

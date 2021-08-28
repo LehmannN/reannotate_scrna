@@ -64,7 +64,7 @@ include { COMPAREGTF as COMPAREGTF_2 } from './modules/submodules/COMPAREGTF'
 include { QUANTIF } from './modules/submodules/QUANTIF'
 include { createRDS } from './modules/processes/single-cell-analyses/createRDS'
 include { createRMarkdown } from './modules/processes/single-cell-analyses/createRMarkdown'
-include { preprocessRDS } from './modules/processes/single-cell-analyses/preprocessRDS'
+include { processRDS } from './modules/processes/single-cell-analyses/processRDS'
 
 
 workflow {
@@ -76,7 +76,7 @@ workflow {
         createRDS(rscripts.filter(~/.*createRDS.R/), QUANTIF.out.countMatrix)
     } else if( params.workflow == 'scAnalyses' ) {
         createRMarkdown(RMarkdown, RDS)
-        preprocessRDS(createRMarkdown.out, RDS)
+        processRDS(createRMarkdown.out, RDS)
     } else {
         error "Please choose a proper worflow (e.g. reannotation, compare...)"
 }}

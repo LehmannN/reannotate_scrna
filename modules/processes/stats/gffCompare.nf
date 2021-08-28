@@ -4,9 +4,8 @@
  *  Compare 2 annotations files (GTF or GFF3)
  */
 
-process compareGTF {
+process gffCompare {
 
-    tag "GffCompare"
     publishDir "${params.outDir}/gffcomp",
         mode: 'copy',
         pattern: 'gffcmp*'
@@ -14,6 +13,7 @@ process compareGTF {
     input:
     file gtfREF
     file gtfNOVEL
+    file script
 
     output:
     file "gffcmp*"
@@ -22,6 +22,9 @@ process compareGTF {
     """
     gffcompare -r $gtfREF \
         -o gffcmp \
-        $gtfNOVEL
+        $gtfNOVEL \
+        1> gffcmp.stdout \
+        2> gffcmp.stderr
+    bash $script
     """
 }

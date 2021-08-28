@@ -6,7 +6,6 @@
 
 process buildCountMatrix{
 
-    tag "Build single-cell count matrix with UMI-tools count"
     publishDir "${params.outDir}/quantif", mode: 'copy'
 
     input:

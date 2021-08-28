@@ -2,12 +2,11 @@
 
 
 /*
- *  Preprocess single-cell count matrix (filter cells, dimension reduction...)
+ *  Process single-cell count matrix (pre-processing and analyses)
  */
 
-process preprocessRDS {
+process processRDS {
 
-    tag "preprocessRDS"
     publishDir "${params.outDir}/${rdsID}/scRNA", mode: 'copy'
 
     input:

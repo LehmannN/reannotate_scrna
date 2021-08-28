@@ -5,7 +5,7 @@ GTF_references:
 RDS:
     ["data/rds/ensGene.rds",
     "data/rds/ncbiRefSeq.rds",
-    "data/rds/refGeneUCSC.gtf"]
+    "data/rds/refGeneUCSC.rds"]
 RMarkdown:
     ["./bin/rmd_files",
     "./bin/rmd_files",

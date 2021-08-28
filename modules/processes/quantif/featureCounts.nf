@@ -6,7 +6,6 @@
 
 process featureCounts {
 
-    tag "FeatureCounts"
     publishDir "${params.outDir}/featureCounts", mode: 'copy'
 
     input:

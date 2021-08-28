@@ -7,7 +7,6 @@
 
 process createRMarkdown {
 
-    tag "createRMarkdown"
     publishDir "${params.outDir}/${rdsID}", mode: 'copy'
 
     input:

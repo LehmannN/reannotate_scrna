@@ -7,7 +7,6 @@
 
 process createRDS {
 
-    tag "createRDS"
     publishDir "${params.outDir}/scAnalyses", mode: 'copy'
 
     input:

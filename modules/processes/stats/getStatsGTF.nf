@@ -7,14 +7,18 @@
 
 process getStatsGTF {
 
-    tag "getStats on GTF file"
     publishDir "${params.outDir}/stats", mode: 'copy'
 
     input:
+    file gtf
 
     output:
+    file "*_stats.tsv"
+
 
     script:
     """
+    filename=$(basename -- "$gtf")
+    mikado util stats $gtf ${filename%.*}_stats.tsv
     """
 }

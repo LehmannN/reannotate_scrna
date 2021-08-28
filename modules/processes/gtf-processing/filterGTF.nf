@@ -7,7 +7,6 @@
 
 process filterGTF {
 
-    tag "filterGTF"
     publishDir "${params.outDir}/gtf-processing", mode: 'copy'
 
     input:
