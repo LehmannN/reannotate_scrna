@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 3 Data analyses | Report</title>
+  <meta name="description" content=" 3 Data analyses | Report" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 3 Data analyses | Report" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 3 Data analyses | Report" />
+  
+  
+  
+
+<meta name="author" content="Nathalie Lehmann" />
+
+
+<meta name="date" content="2021-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-pre-processing.html"/>
+<link rel="next" href="session-info.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/pdfmake-1.10.20/pdfmake.js"></script>
+<script src="libs/pdfmake-1.10.20/vfs_fonts.js"></script>
+<link href="libs/dt-ext-buttons-1.10.20/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-buttons-1.10.20/js/dataTables.buttons.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.flash.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.html5.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.colVis.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.print.min.js"></script>
+<link href="libs/dt-ext-scroller-1.10.20/css/scroller.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-scroller-1.10.20/js/dataTables.scroller.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-pre-processing.html"><a href="data-pre-processing.html"><i class="fa fa-check"></i><b>2</b> Data pre-processing</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#calculate-qc-metrics"><i class="fa fa-check"></i><b>2.1</b> Calculate QC metrics</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-metrics"><i class="fa fa-check"></i><b>2.1.1</b> Cells metrics</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#features-metrics"><i class="fa fa-check"></i><b>2.1.2</b> Features metrics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#plot-qc-metrics"><i class="fa fa-check"></i><b>2.2</b> Plot QC metrics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-metrics-1"><i class="fa fa-check"></i><b>2.2.1</b> Cells metrics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#genes-metrics"><i class="fa fa-check"></i><b>2.2.2</b> Genes metrics</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-pre-processing.html"><a href="data-pre-processing.html#highly-expressed-genes"><i class="fa fa-check"></i><b>2.2.3</b> Highly expressed genes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-pre-processing.html"><a href="data-pre-processing.html#filter-data"><i class="fa fa-check"></i><b>2.3</b> Filter data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-filtering"><i class="fa fa-check"></i><b>2.3.1</b> Cells filtering</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#genes-filtering"><i class="fa fa-check"></i><b>2.3.2</b> Genes filtering</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-analyses.html"><a href="data-analyses.html"><i class="fa fa-check"></i><b>3</b> Data analyses</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-analyses.html"><a href="data-analyses.html#data-preparation-to-get-scores"><i class="fa fa-check"></i><b>3.1</b> Data preparation to get scores</a></li>
+<li class="chapter" data-level="3.2" data-path="data-analyses.html"><a href="data-analyses.html#identify-populations"><i class="fa fa-check"></i><b>3.2</b> Identify populations</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-analyses.html"><a href="data-analyses.html#get-stats-on-some-marker-genes"><i class="fa fa-check"></i><b>3.2.1</b> Get stats on some marker genes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-analyses.html"><a href="data-analyses.html#plot-each-marker-genes"><i class="fa fa-check"></i><b>3.2.2</b> Plot each marker genes</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-analyses.html"><a href="data-analyses.html#classify-cells-based-on-known-markers"><i class="fa fa-check"></i><b>3.2.3</b> Classify cells based on known markers</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-status-depending-on-sox2-expression"><i class="fa fa-check"></i><b>3.2.4</b> Assign cell status depending on SOX2 expression</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-cycle-scores"><i class="fa fa-check"></i><b>3.3</b> Assign cell-cycle scores</a></li>
+<li class="chapter" data-level="3.4" data-path="data-analyses.html"><a href="data-analyses.html#summary-plots"><i class="fa fa-check"></i><b>3.4</b> Summary plots</a></li>
+<li class="chapter" data-level="3.5" data-path="data-analyses.html"><a href="data-analyses.html#second-normalization-step"><i class="fa fa-check"></i><b>3.5</b> Second normalization step</a></li>
+<li class="chapter" data-level="3.6" data-path="data-analyses.html"><a href="data-analyses.html#find-variable-genes"><i class="fa fa-check"></i><b>3.6</b> Find variable genes</a></li>
+<li class="chapter" data-level="3.7" data-path="data-analyses.html"><a href="data-analyses.html#clustering"><i class="fa fa-check"></i><b>3.7</b> Clustering</a></li>
+<li class="chapter" data-level="3.8" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-clusters"><i class="fa fa-check"></i><b>3.8</b> Find DE genes between clusters</a></li>
+<li class="chapter" data-level="3.9" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-subtypes"><i class="fa fa-check"></i><b>3.9</b> Find DE genes between subtypes</a></li>
+<li class="chapter" data-level="3.10" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-sox2-and-sox2--populations"><i class="fa fa-check"></i><b>3.10</b> Find DE genes between SOX2+ and SOX2- populations</a></li>
+<li class="chapter" data-level="3.11" data-path="data-analyses.html"><a href="data-analyses.html#save-data"><i class="fa fa-check"></i><b>3.11</b> Save data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>4</b> Session info</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Report</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-analyses" class="section level1" number="3">
+<h1><span class="header-section-number"> 3</span> Data analyses</h1>
+<div id="data-preparation-to-get-scores" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data preparation to get scores</h2>
+<p>This preparation step includes normalization, scaling of the data and identification of variable genes,
+which are performed in order to infer scores on cells (such as cell cycle).
+The normalization here is a simple log-normalization.
+A second normalization (with <code>SCTransform</code>), more robust to UMI-based datasets analyses, will be performed later on.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-analyses.html#cb41-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">NormalizeData</span>(obj_seurat,</span>
+<span id="cb41-2"><a href="data-analyses.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">normalization.method =</span> <span class="st">&quot;LogNormalize&quot;</span>,</span>
+<span id="cb41-3"><a href="data-analyses.html#cb41-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale.factor =</span> <span class="dv">10000</span>)</span>
+<span id="cb41-4"><a href="data-analyses.html#cb41-4" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">ScaleData</span>(obj_seurat,</span>
+<span id="cb41-5"><a href="data-analyses.html#cb41-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">features =</span> <span class="fu">rownames</span>(obj_seurat))</span>
+<span id="cb41-6"><a href="data-analyses.html#cb41-6" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">FindVariableFeatures</span>(obj_seurat,</span>
+<span id="cb41-7"><a href="data-analyses.html#cb41-7" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">selection.method =</span> <span class="st">&quot;vst&quot;</span>)</span></code></pre></div>
+<p>It also includes an inspection of the PCs to select an adequate number of PCs.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-analyses.html#cb42-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">RunPCA</span>(obj_seurat,</span>
+<span id="cb42-2"><a href="data-analyses.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">features =</span> <span class="fu">VariableFeatures</span>(<span class="at">object =</span> obj_seurat),</span>
+<span id="cb42-3"><a href="data-analyses.html#cb42-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb42-4"><a href="data-analyses.html#cb42-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">npcs =</span> <span class="dv">100</span>)</span>
+<span id="cb42-5"><a href="data-analyses.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ElbowPlot</span>(obj_seurat, <span class="at">ndims =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/runpca-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>For the analyses to be comparable, we selected the same number of PCs for all of them and select the 25 first PCs.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="data-analyses.html#cb43-1" aria-hidden="true" tabindex="-1"></a>npc <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb43-2"><a href="data-analyses.html#cb43-2" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">RunPCA</span>(obj_seurat,</span>
+<span id="cb43-3"><a href="data-analyses.html#cb43-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">features =</span> <span class="fu">VariableFeatures</span>(<span class="at">object =</span> obj_seurat),</span>
+<span id="cb43-4"><a href="data-analyses.html#cb43-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb43-5"><a href="data-analyses.html#cb43-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">npcs =</span> npc)</span>
+<span id="cb43-6"><a href="data-analyses.html#cb43-6" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">FindNeighbors</span>(obj_seurat, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span>npc) <span class="sc">%&gt;%</span></span>
+<span id="cb43-7"><a href="data-analyses.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RunUMAP</span>(<span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span>npc)</span></code></pre></div>
+<p>We will also define various colors palette for all the coming analyses.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-analyses.html#cb44-1" aria-hidden="true" tabindex="-1"></a>colors_pal1 <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(yarrr<span class="sc">::</span><span class="fu">piratepal</span>(<span class="st">&quot;appletv&quot;</span>, <span class="at">plot.result =</span> <span class="cn">FALSE</span>, <span class="at">trans =</span> <span class="dv">0</span>)[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">6</span>)])</span>
+<span id="cb44-2"><a href="data-analyses.html#cb44-2" aria-hidden="true" tabindex="-1"></a>colors_pal2 <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">4</span>, <span class="at">name =</span> <span class="st">&quot;Dark2&quot;</span>))</span>
+<span id="cb44-3"><a href="data-analyses.html#cb44-3" aria-hidden="true" tabindex="-1"></a>colors_pal3 <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">9</span>, <span class="at">name =</span> <span class="st">&quot;Paired&quot;</span>))</span>
+<span id="cb44-4"><a href="data-analyses.html#cb44-4" aria-hidden="true" tabindex="-1"></a>colors_pal4 <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(yarrr<span class="sc">::</span><span class="fu">piratepal</span>(<span class="st">&quot;basel&quot;</span>, <span class="at">plot.result =</span> <span class="cn">FALSE</span>, <span class="at">trans =</span> <span class="fl">0.1</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>])</span>
+<span id="cb44-5"><a href="data-analyses.html#cb44-5" aria-hidden="true" tabindex="-1"></a>colors_pal <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Phase =</span> colors_pal1,</span>
+<span id="cb44-6"><a href="data-analyses.html#cb44-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Cell_type =</span> colors_pal2,</span>
+<span id="cb44-7"><a href="data-analyses.html#cb44-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Cell_subtype =</span> colors_pal3,</span>
+<span id="cb44-8"><a href="data-analyses.html#cb44-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Clusters =</span> colors_pal4)</span>
+<span id="cb44-9"><a href="data-analyses.html#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors_pal[[<span class="dv">1</span>]]) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;G1&#39;</span>, <span class="st">&#39;G2M&#39;</span>, <span class="st">&#39;S&#39;</span>)</span>
+<span id="cb44-10"><a href="data-analyses.html#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors_pal[[<span class="dv">2</span>]]) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Progenitor&#39;</span>, <span class="st">&#39;Neuron&#39;</span>, <span class="st">&#39;Neural_crest&#39;</span>, <span class="st">&#39;Mesoderm&#39;</span>)</span>
+<span id="cb44-11"><a href="data-analyses.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors_pal[[<span class="dv">3</span>]]) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;RP&#39;</span>, <span class="st">&#39;dp&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;pMN&#39;</span>, <span class="st">&#39;p3&#39;</span>, <span class="st">&#39;FP&#39;</span>, <span class="st">&#39;Neuron&#39;</span>, <span class="st">&#39;Neural_crest&#39;</span>, <span class="st">&#39;Mesoderm&#39;</span>)</span>
+<span id="cb44-12"><a href="data-analyses.html#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors_pal[[<span class="dv">4</span>]]) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;clust_&#39;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb44-13"><a href="data-analyses.html#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="data-analyses.html#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Save color palettes</span></span>
+<span id="cb44-15"><a href="data-analyses.html#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(obj_seurat[[]],</span>
+<span id="cb44-16"><a href="data-analyses.html#cb44-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/raw/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_colors_palette.tsv&quot;</span>),</span>
+<span id="cb44-17"><a href="data-analyses.html#cb44-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb44-18"><a href="data-analyses.html#cb44-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+</div>
+<div id="identify-populations" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Identify populations</h2>
+<p>The cells used in this dataset come from chick embryo neural tube dissection.
+We thus expect to find mostly neural progenitors and early neurons.
+However, during dissection, some adjacent cells are difficult to clean from the neural tube.
+We might find also blood, mesoderm and neural crest cells in our dataset, besides neurons and progenitors.
+In the following step, we use a set of neurogenesis markers to identify cells in our dataset.</p>
+<p>Specifically, our main markers are on one side SOX2 (a pan-progenitor marker), and on the other side TUBB3, a marker of neurons.
+We use different strategies to identify our cell populations.
+First, a minimalist one just based on SOX2 expression.
+The reason for this is that most of the cells in the datasets are supposed to be neural progenitors, which express SOX2.
+This first classification will simply separate cells into SOX2+ (progenitors) and SOX2- (non-progenitors) populations.
+The non-progenitor population actually include the neurons, mesoderm and neural crest.</p>
+<p>Second, a more advanced classification is performed based on a set of marker genes.
+For this purpose, we use the table of marker genes provided in the mouse spinal cord atlas from <em>Delile et al. (2019)</em>.
+In this classification, cells are classified into progenitors, neurons, neural crest and mesoderm.
+Finally, we use a deeper level of classification for progenitors, according to the progenitors classification from <em>Delile et al. (2019)</em>.
+See below for more details.</p>
+<div id="get-stats-on-some-marker-genes" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Get stats on some marker genes</h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="data-analyses.html#cb45-1" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;SOX2&#39;</span>, <span class="st">&#39;TUBB3&#39;</span>, <span class="st">&#39;PAX6&#39;</span>, <span class="st">&#39;PAX7&#39;</span>,</span>
+<span id="cb45-2"><a href="data-analyses.html#cb45-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;ISL1&#39;</span>, <span class="st">&#39;ISL2&#39;</span>, <span class="st">&#39;NKX6-2&#39;</span>, <span class="st">&#39;OLIG2&#39;</span>,</span>
+<span id="cb45-3"><a href="data-analyses.html#cb45-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;SHH&#39;</span>, <span class="st">&#39;PRDM8&#39;</span>, <span class="st">&#39;TWIST1&#39;</span>, <span class="st">&#39;SOX10&#39;</span>)</span>
+<span id="cb45-4"><a href="data-analyses.html#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="data-analyses.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get quick access to metadata on genes</span></span>
+<span id="cb45-6"><a href="data-analyses.html#cb45-6" aria-hidden="true" tabindex="-1"></a>md_genes <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features</span>
+<span id="cb45-7"><a href="data-analyses.html#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="data-analyses.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if features are in the dataset</span></span>
+<span id="cb45-9"><a href="data-analyses.html#cb45-9" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> features[<span class="fu">which</span>(features <span class="sc">%in%</span> <span class="fu">row.names</span>(md_genes))]</span>
+<span id="cb45-10"><a href="data-analyses.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(features)</span></code></pre></div>
+<pre><code>##  [1] &quot;SOX2&quot;   &quot;TUBB3&quot;  &quot;PAX6&quot;   &quot;PAX7&quot;   &quot;ISL1&quot;   &quot;ISL2&quot;   &quot;NKX6-2&quot; &quot;OLIG2&quot; 
+##  [9] &quot;SHH&quot;    &quot;PRDM8&quot;  &quot;TWIST1&quot; &quot;SOX10&quot;</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="data-analyses.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print metadata of these selected genes</span></span>
+<span id="cb47-2"><a href="data-analyses.html#cb47-2" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(md_genes[features,],</span>
+<span id="cb47-3"><a href="data-analyses.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">extensions =</span> <span class="fu">c</span>(<span class="st">&#39;Buttons&#39;</span>, <span class="st">&#39;Scroller&#39;</span>),</span>
+<span id="cb47-4"><a href="data-analyses.html#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb47-5"><a href="data-analyses.html#cb47-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb47-6"><a href="data-analyses.html#cb47-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
+<span id="cb47-7"><a href="data-analyses.html#cb47-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">deferRender =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb47-8"><a href="data-analyses.html#cb47-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb47-9"><a href="data-analyses.html#cb47-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">scrollX =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb47-10"><a href="data-analyses.html#cb47-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">scroller =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div id="htmlwidget-7b0360521d6796284e64" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b0360521d6796284e64">{"x":{"filter":"none","extensions":["Buttons","Scroller"],"data":[["SOX2","TUBB3","PAX6","PAX7","ISL1","ISL2","NKX6-2","OLIG2","SHH","PRDM8","TWIST1","SOX10"],[499,1753,1422,689,271,40,1038,751,108,1029,495,131],[20.1128577186618,70.6569931479242,57.3155985489722,27.7710600564289,10.9230149133414,1.61225312374043,41.8379685610641,30.2700523982265,4.35308343409915,41.4752116082225,19.9516324062878,5.2801289802499],[633,12462,9638,2137,2143,54,5449,15260,801,3957,5149,1273],[2.80140371001736,4.09558774691874,3.98398692196519,3.32980452216407,3.33102217104183,1.73239375982297,3.73631680790411,4.18355453361886,2.90363251608424,3.59736605026603,3.71172289182723,3.10482840365366],[0.255139056831923,5.0229746070133,3.88472390165256,0.861346231358323,0.863764611043934,0.0217654171704958,2.1962918178154,6.15074566706973,0.322853688029021,1.59492140266022,2.07537283353486,0.513099556630391],[-0.593223054254854,0.700960982646534,0.589360157692981,-0.0648222421081397,-0.0636045932303805,-1.66223300444924,0.3416900436319,0.788927769346653,-0.490994248187971,0.202739285993819,0.317096127555026,-0.289798360618554],[79.8871422813382,29.3430068520758,42.6844014510278,72.2289399435711,89.0769850866586,98.3877468762596,58.1620314389359,69.7299476017735,95.6469165659008,58.5247883917775,80.0483675937122,94.7198710197501],[0.263068423289418,5.18147046323842,3.91500212494688,0.864003399915002,0.896302592435189,0.0225244368890778,2.28049298767531,6.3918402039949,0.325541861453464,1.64555886102847,2.13557161070973,0.535061623459414],[0.337653335877488,131.081425217772,38.500425350761,3.50785760543061,11.7511470376506,0.0373325700871083,18.6058140425742,261.961191892821,5.51047403661847,10.8913248682388,31.3034662653842,8.46231182655807],[0.337994090289847,14.0851310289952,9.21696784223994,1.24018126462844,1.29602605710343,0.0262540526078532,4.26774562765457,19.5477065071447,0.42174766441491,2.77825450672499,3.9056250812861,0.715516890364583],[0.998991833223874,9.30636888985487,4.17712484297917,2.82850394976866,9.06706078418975,1.42197361469221,4.35963519522112,13.401121599461,12.8472035763527,3.92020415763762,8.01496959228767,11.8268512463014],[false,true,true,true,true,true,true,true,true,true,true,true]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>nCells_detected<\/th>\n      <th>percentCells_detected<\/th>\n      <th>total_counts<\/th>\n      <th>log10_total_counts<\/th>\n      <th>mean_counts<\/th>\n      <th>log10_mean_counts<\/th>\n      <th>percent_Dropouts<\/th>\n      <th>vst.mean<\/th>\n      <th>vst.variance<\/th>\n      <th>vst.variance.expected<\/th>\n      <th>vst.variance.standardized<\/th>\n      <th>vst.variable<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["csv","pdf"],"deferRender":true,"scrollY":200,"scrollX":true,"scroller":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="plot-each-marker-genes" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Plot each marker genes</h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-analyses.html#cb48-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb48-2"><a href="data-analyses.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(features))) {</span>
+<span id="cb48-3"><a href="data-analyses.html#cb48-3" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">FeaturePlot</span>(obj_seurat,</span>
+<span id="cb48-4"><a href="data-analyses.html#cb48-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">features =</span> features[i],</span>
+<span id="cb48-5"><a href="data-analyses.html#cb48-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;grey90&quot;</span>, <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Spectral&quot;</span>))),</span>
+<span id="cb48-6"><a href="data-analyses.html#cb48-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pt.size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb48-7"><a href="data-analyses.html#cb48-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb48-8"><a href="data-analyses.html#cb48-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-9"><a href="data-analyses.html#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(features), <span class="dv">4</span>)) {</span>
+<span id="cb48-10"><a href="data-analyses.html#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">c</span>(i<span class="sc">+</span><span class="dv">3</span>) <span class="sc">&lt;=</span> <span class="fu">length</span>(features)) {</span>
+<span id="cb48-11"><a href="data-analyses.html#cb48-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(plots[i<span class="sc">:</span><span class="fu">c</span>(i<span class="sc">+</span><span class="dv">3</span>)], <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>))</span>
+<span id="cb48-12"><a href="data-analyses.html#cb48-12" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb48-13"><a href="data-analyses.html#cb48-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(plots[i<span class="sc">:</span><span class="fu">length</span>(features)], <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>))</span>
+<span id="cb48-14"><a href="data-analyses.html#cb48-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb48-15"><a href="data-analyses.html#cb48-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/markers-genes-plots-1.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/markers-genes-plots-2.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/markers-genes-plots-3.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="classify-cells-based-on-known-markers" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Classify cells based on known markers</h3>
+<div id="identify-cell-types" class="section level4" number="3.2.3.1">
+<h4><span class="header-section-number">3.2.3.1</span> Identify cell types</h4>
+<p>We here use markers genes defined in <em>Delile et al. (2019)</em> to identify progenitors, neurons and mesoderm cells.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-analyses.html#cb49-1" aria-hidden="true" tabindex="-1"></a>pop_markers <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&#39;TableS1.csv&#39;</span>,</span>
+<span id="cb49-2"><a href="data-analyses.html#cb49-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb49-3"><a href="data-analyses.html#cb49-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sep =</span> <span class="st">&#39;;&#39;</span>,</span>
+<span id="cb49-4"><a href="data-analyses.html#cb49-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb49-5"><a href="data-analyses.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pop_markers) <span class="ot">&lt;-</span> <span class="fu">toupper</span>(<span class="fu">rownames</span>(pop_markers))</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="data-analyses.html#cb50-1" aria-hidden="true" tabindex="-1"></a>markers_genes <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Progenitor =</span> <span class="fu">c</span>(<span class="st">&#39;SOX2&#39;</span>, <span class="fu">rownames</span>(pop_markers)[<span class="dv">1</span><span class="sc">:</span><span class="dv">26</span>]) ,</span>
+<span id="cb50-2"><a href="data-analyses.html#cb50-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Neuron =</span> <span class="fu">c</span>(<span class="st">&#39;TUBB3&#39;</span>, <span class="st">&#39;ELAVL3&#39;</span>, <span class="fu">rownames</span>(pop_markers)[<span class="dv">27</span><span class="sc">:</span><span class="dv">54</span>]),</span>
+<span id="cb50-3"><a href="data-analyses.html#cb50-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Neural_crest =</span> <span class="fu">c</span>(<span class="st">&#39;SOX10&#39;</span>, <span class="st">&#39;TPM1&#39;</span>, <span class="st">&#39;LMO4&#39;</span>, <span class="st">&#39;NPR3&#39;</span>),</span>
+<span id="cb50-4"><a href="data-analyses.html#cb50-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Mesoderm =</span> <span class="fu">c</span>(<span class="st">&#39;FOXC1&#39;</span>, <span class="st">&#39;FOXC2&#39;</span>, <span class="st">&#39;TWIST1&#39;</span>, <span class="st">&#39;TWIST2&#39;</span>, <span class="st">&#39;MEOX1&#39;</span>, <span class="st">&#39;MEXO2&#39;</span>))</span>
+<span id="cb50-5"><a href="data-analyses.html#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="data-analyses.html#cb50-6" aria-hidden="true" tabindex="-1"></a>indices_to_remove <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb50-7"><a href="data-analyses.html#cb50-7" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb50-8"><a href="data-analyses.html#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="data-analyses.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(markers_genes))) {</span>
+<span id="cb50-10"><a href="data-analyses.html#cb50-10" aria-hidden="true" tabindex="-1"></a>    markers_genes[[i]] <span class="ot">&lt;-</span> markers_genes[[i]][<span class="fu">which</span>(markers_genes[[i]] <span class="sc">%in%</span> <span class="fu">rownames</span>(obj_seurat))]</span>
+<span id="cb50-11"><a href="data-analyses.html#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(markers_genes[[i]]) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb50-12"><a href="data-analyses.html#cb50-12" aria-hidden="true" tabindex="-1"></a>    obj_seurat <span class="ot">&lt;-</span> <span class="fu">AddModuleScore</span>(obj_seurat,</span>
+<span id="cb50-13"><a href="data-analyses.html#cb50-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">features =</span> markers_genes[i],</span>
+<span id="cb50-14"><a href="data-analyses.html#cb50-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">pool =</span> <span class="cn">NULL</span>,</span>
+<span id="cb50-15"><a href="data-analyses.html#cb50-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">nbin =</span> <span class="dv">5</span>,</span>
+<span id="cb50-16"><a href="data-analyses.html#cb50-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb50-17"><a href="data-analyses.html#cb50-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">ctrl =</span> <span class="fu">length</span>(markers_genes[i]),</span>
+<span id="cb50-18"><a href="data-analyses.html#cb50-18" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">k =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb50-19"><a href="data-analyses.html#cb50-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">name =</span> <span class="fu">names</span>(markers_genes[i]))</span>
+<span id="cb50-20"><a href="data-analyses.html#cb50-20" aria-hidden="true" tabindex="-1"></a>    col_name <span class="ot">&lt;-</span> <span class="fu">names</span>(markers_genes)[[i]]</span>
+<span id="cb50-21"><a href="data-analyses.html#cb50-21" aria-hidden="true" tabindex="-1"></a>    col_name_val <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">colnames</span>(obj_seurat[[]]) <span class="sc">==</span> <span class="fu">paste0</span>(col_name, <span class="dv">1</span>))</span>
+<span id="cb50-22"><a href="data-analyses.html#cb50-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(obj_seurat<span class="sc">@</span>meta.data)[col_name_val] <span class="ot">&lt;-</span> col_name</span>
+<span id="cb50-23"><a href="data-analyses.html#cb50-23" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb50-24"><a href="data-analyses.html#cb50-24" aria-hidden="true" tabindex="-1"></a>        indices_to_remove[j] <span class="ot">&lt;-</span> i</span>
+<span id="cb50-25"><a href="data-analyses.html#cb50-25" aria-hidden="true" tabindex="-1"></a>        j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb50-26"><a href="data-analyses.html#cb50-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb50-27"><a href="data-analyses.html#cb50-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-28"><a href="data-analyses.html#cb50-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-29"><a href="data-analyses.html#cb50-29" aria-hidden="true" tabindex="-1"></a>markers_genes[indices_to_remove] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb50-30"><a href="data-analyses.html#cb50-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(markers_genes)</span></code></pre></div>
+<pre><code>## $Progenitor
+##  [1] &quot;SOX2&quot;   &quot;LMX1A&quot;  &quot;MSX1&quot;   &quot;MSX2&quot;   &quot;PAX3&quot;   &quot;WNT1&quot;   &quot;IRX3&quot;   &quot;IRX5&quot;  
+##  [9] &quot;PAX6&quot;   &quot;PAX7&quot;   &quot;GSX2&quot;   &quot;ASCL1&quot;  &quot;GBX2&quot;   &quot;GSX1&quot;   &quot;DBX2&quot;   &quot;SP8&quot;   
+## [17] &quot;NKX6-2&quot; &quot;PRDM12&quot; &quot;NKX6-1&quot; &quot;FOXN4&quot;  &quot;OLIG2&quot;  &quot;NKX2-2&quot; &quot;FOXA2&quot;  &quot;FERD3L&quot;
+## 
+## $Neuron
+##  [1] &quot;TUBB3&quot;   &quot;ARX&quot;     &quot;SHH&quot;     &quot;LMX1B&quot;   &quot;FOXD3&quot;   &quot;LHX1&quot;    &quot;LHX5&quot;   
+##  [8] &quot;ISL1&quot;    &quot;TLX3&quot;    &quot;OTP&quot;     &quot;LBX1&quot;    &quot;PAX2&quot;    &quot;GBX1&quot;    &quot;BHLHE22&quot;
+## [15] &quot;PTF1A&quot;   &quot;WT1&quot;     &quot;EVX1&quot;    &quot;PITX2&quot;   &quot;EN1&quot;    
+## 
+## $Neural_crest
+## [1] &quot;SOX10&quot; &quot;TPM1&quot;  &quot;LMO4&quot;  &quot;NPR3&quot; 
+## 
+## $Mesoderm
+## [1] &quot;FOXC1&quot;  &quot;FOXC2&quot;  &quot;TWIST1&quot; &quot;TWIST2&quot; &quot;MEOX1&quot;</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="data-analyses.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update colors according to cell types found in the dataset</span></span>
+<span id="cb52-2"><a href="data-analyses.html#cb52-2" aria-hidden="true" tabindex="-1"></a>colors_pal<span class="sc">$</span>Cell_type <span class="ot">&lt;-</span> colors_pal<span class="sc">$</span>Cell_type[<span class="fu">names</span>(markers_genes)]</span>
+<span id="cb52-3"><a href="data-analyses.html#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="data-analyses.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">names</span>(markers_genes)){</span>
+<span id="cb52-5"><a href="data-analyses.html#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">FeaturePlot</span>(obj_seurat,</span>
+<span id="cb52-6"><a href="data-analyses.html#cb52-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">features =</span> f,</span>
+<span id="cb52-7"><a href="data-analyses.html#cb52-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb52-8"><a href="data-analyses.html#cb52-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;grey90&quot;</span>, <span class="fu">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;YlGnBu&quot;</span>)),</span>
+<span id="cb52-9"><a href="data-analyses.html#cb52-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pt.size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb52-10"><a href="data-analyses.html#cb52-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>())</span>
+<span id="cb52-11"><a href="data-analyses.html#cb52-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-type-1.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-type-2.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-type-3.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-type-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In order to assign a type to each cell, we take the highest value between each score among the scores of progenitors, neurons, mesoderm and neural crest.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="data-analyses.html#cb53-1" aria-hidden="true" tabindex="-1"></a>names_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">names</span>(markers_genes))</span>
+<span id="cb53-2"><a href="data-analyses.html#cb53-2" aria-hidden="true" tabindex="-1"></a>md_cells <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>meta.data</span>
+<span id="cb53-3"><a href="data-analyses.html#cb53-3" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_type <span class="ot">&lt;-</span> <span class="fu">colnames</span>(md_cells[,names_cols])[<span class="fu">max.col</span>(md_cells[,names_cols], <span class="at">ties.method =</span> <span class="st">&quot;first&quot;</span>)]</span>
+<span id="cb53-4"><a href="data-analyses.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co">#types_levels &lt;- c(&#39;Progenitor&#39;, &#39;Neuron&#39;, &#39;Neural_crest&#39;, &#39;Mesoderm&#39;)</span></span>
+<span id="cb53-5"><a href="data-analyses.html#cb53-5" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_type <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_type,</span>
+<span id="cb53-6"><a href="data-analyses.html#cb53-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">levels =</span> names_cols)</span>
+<span id="cb53-7"><a href="data-analyses.html#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;Cell_type&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="data-analyses.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_type)</span></code></pre></div>
+<pre><code>## 
+##   Progenitor       Neuron Neural_crest     Mesoderm 
+##          968          433          581          371</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="data-analyses.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj_seurat,</span>
+<span id="cb56-2"><a href="data-analyses.html#cb56-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>,</span>
+<span id="cb56-3"><a href="data-analyses.html#cb56-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb56-4"><a href="data-analyses.html#cb56-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb56-5"><a href="data-analyses.html#cb56-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> colors_pal<span class="sc">$</span>Cell_type,</span>
+<span id="cb56-6"><a href="data-analyses.html#cb56-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.size =</span> <span class="dv">4</span>,</span>
+<span id="cb56-7"><a href="data-analyses.html#cb56-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">pt.size =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-type-dimplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="identify-cell-subtypes" class="section level4" number="3.2.3.2">
+<h4><span class="header-section-number">3.2.3.2</span> Identify cell subtypes</h4>
+<p>Now we look for progenitors subtypes.
+We follow the same process as above for the cell assignment.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="data-analyses.html#cb57-1" aria-hidden="true" tabindex="-1"></a>markers_genes <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">RP =</span> <span class="fu">rownames</span>(pop_markers[<span class="fu">which</span>(pop_markers<span class="sc">$</span>RP <span class="sc">==</span> <span class="dv">1</span>),]),</span>
+<span id="cb57-2"><a href="data-analyses.html#cb57-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dp =</span> <span class="fu">c</span>(<span class="fu">rownames</span>(pop_markers)[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>], <span class="fu">rownames</span>(pop_markers)[<span class="dv">6</span><span class="sc">:</span><span class="dv">15</span>]),</span>
+<span id="cb57-3"><a href="data-analyses.html#cb57-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">p =</span> <span class="fu">c</span>(<span class="fu">rownames</span>(pop_markers)[<span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>], <span class="fu">rownames</span>(pop_markers)[<span class="dv">14</span><span class="sc">:</span><span class="dv">19</span>]),</span>
+<span id="cb57-4"><a href="data-analyses.html#cb57-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pMN =</span> <span class="fu">rownames</span>(pop_markers[<span class="fu">which</span>(pop_markers<span class="sc">$</span>pMN <span class="sc">==</span> <span class="dv">1</span>),]),</span>
+<span id="cb57-5"><a href="data-analyses.html#cb57-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">p3 =</span> <span class="fu">rownames</span>(pop_markers[<span class="fu">which</span>(pop_markers<span class="sc">$</span>p3 <span class="sc">==</span> <span class="dv">1</span>),]),</span>
+<span id="cb57-6"><a href="data-analyses.html#cb57-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">FP =</span> <span class="fu">rownames</span>(pop_markers[<span class="fu">which</span>(pop_markers<span class="sc">$</span>FP <span class="sc">==</span> <span class="dv">1</span>),]))</span>
+<span id="cb57-7"><a href="data-analyses.html#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="data-analyses.html#cb57-8" aria-hidden="true" tabindex="-1"></a>indices_to_remove <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb57-9"><a href="data-analyses.html#cb57-9" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb57-10"><a href="data-analyses.html#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-11"><a href="data-analyses.html#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(markers_genes))) {</span>
+<span id="cb57-12"><a href="data-analyses.html#cb57-12" aria-hidden="true" tabindex="-1"></a>    markers_genes[[i]] <span class="ot">&lt;-</span> markers_genes[[i]][<span class="fu">which</span>(markers_genes[[i]] <span class="sc">%in%</span> <span class="fu">rownames</span>(obj_seurat))]</span>
+<span id="cb57-13"><a href="data-analyses.html#cb57-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(markers_genes[[i]]) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb57-14"><a href="data-analyses.html#cb57-14" aria-hidden="true" tabindex="-1"></a>    obj_seurat <span class="ot">&lt;-</span> <span class="fu">AddModuleScore</span>(obj_seurat,</span>
+<span id="cb57-15"><a href="data-analyses.html#cb57-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">features =</span> markers_genes[i],</span>
+<span id="cb57-16"><a href="data-analyses.html#cb57-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">pool =</span> <span class="cn">NULL</span>,</span>
+<span id="cb57-17"><a href="data-analyses.html#cb57-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">nbin =</span> <span class="dv">5</span>,</span>
+<span id="cb57-18"><a href="data-analyses.html#cb57-18" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb57-19"><a href="data-analyses.html#cb57-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">ctrl =</span> <span class="fu">length</span>(markers_genes[i]),</span>
+<span id="cb57-20"><a href="data-analyses.html#cb57-20" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">k =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb57-21"><a href="data-analyses.html#cb57-21" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">name =</span> <span class="fu">names</span>(markers_genes[i]))</span>
+<span id="cb57-22"><a href="data-analyses.html#cb57-22" aria-hidden="true" tabindex="-1"></a>    col_name <span class="ot">&lt;-</span> <span class="fu">names</span>(markers_genes)[[i]]</span>
+<span id="cb57-23"><a href="data-analyses.html#cb57-23" aria-hidden="true" tabindex="-1"></a>    col_name_val <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">colnames</span>(obj_seurat[[]]) <span class="sc">==</span> <span class="fu">paste0</span>(col_name, <span class="dv">1</span>))</span>
+<span id="cb57-24"><a href="data-analyses.html#cb57-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(obj_seurat<span class="sc">@</span>meta.data)[col_name_val] <span class="ot">&lt;-</span> col_name</span>
+<span id="cb57-25"><a href="data-analyses.html#cb57-25" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb57-26"><a href="data-analyses.html#cb57-26" aria-hidden="true" tabindex="-1"></a>        indices_to_remove[j] <span class="ot">&lt;-</span> i</span>
+<span id="cb57-27"><a href="data-analyses.html#cb57-27" aria-hidden="true" tabindex="-1"></a>        j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb57-28"><a href="data-analyses.html#cb57-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb57-29"><a href="data-analyses.html#cb57-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-30"><a href="data-analyses.html#cb57-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-31"><a href="data-analyses.html#cb57-31" aria-hidden="true" tabindex="-1"></a>markers_genes[indices_to_remove] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb57-32"><a href="data-analyses.html#cb57-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(markers_genes)</span></code></pre></div>
+<pre><code>## $RP
+## [1] &quot;LMX1A&quot; &quot;MSX1&quot;  &quot;MSX2&quot;  &quot;PAX3&quot;  &quot;WNT1&quot; 
+## 
+## $dp
+##  [1] &quot;MSX1&quot;  &quot;MSX2&quot;  &quot;PAX3&quot;  &quot;IRX3&quot;  &quot;IRX5&quot;  &quot;PAX6&quot;  &quot;PAX7&quot;  &quot;GSX2&quot;  &quot;ASCL1&quot;
+## [10] &quot;GBX2&quot;  &quot;GSX1&quot;  &quot;DBX2&quot; 
+## 
+## $p
+## [1] &quot;IRX3&quot;   &quot;IRX5&quot;   &quot;GSX1&quot;   &quot;DBX2&quot;   &quot;SP8&quot;    &quot;NKX6-2&quot; &quot;PRDM12&quot;
+## 
+## $pMN
+## [1] &quot;SP8&quot;    &quot;NKX6-1&quot; &quot;OLIG2&quot; 
+## 
+## $p3
+## [1] &quot;NKX6-1&quot; &quot;NKX2-2&quot;
+## 
+## $FP
+## [1] &quot;NKX6-1&quot; &quot;FOXA2&quot;  &quot;FERD3L&quot; &quot;ARX&quot;    &quot;SHH&quot;    &quot;LMX1B&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="data-analyses.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update colors according to cell types found in the dataset</span></span>
+<span id="cb59-2"><a href="data-analyses.html#cb59-2" aria-hidden="true" tabindex="-1"></a>names_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">names</span>(markers_genes), <span class="fu">c</span>(<span class="fu">levels</span>(obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_type)))</span>
+<span id="cb59-3"><a href="data-analyses.html#cb59-3" aria-hidden="true" tabindex="-1"></a>names_cols <span class="ot">&lt;-</span> names_cols[<span class="sc">-</span><span class="fu">which</span>(names_cols <span class="sc">==</span> <span class="st">&quot;Progenitor&quot;</span>)]</span>
+<span id="cb59-4"><a href="data-analyses.html#cb59-4" aria-hidden="true" tabindex="-1"></a>colors_pal<span class="sc">$</span>Cell_subtype <span class="ot">&lt;-</span> colors_pal<span class="sc">$</span>Cell_subtype[names_cols]</span>
+<span id="cb59-5"><a href="data-analyses.html#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="data-analyses.html#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">names</span>(markers_genes)){</span>
+<span id="cb59-7"><a href="data-analyses.html#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">FeaturePlot</span>(obj_seurat,</span>
+<span id="cb59-8"><a href="data-analyses.html#cb59-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">features =</span> f,</span>
+<span id="cb59-9"><a href="data-analyses.html#cb59-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb59-10"><a href="data-analyses.html#cb59-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;grey90&quot;</span>, <span class="fu">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;YlGnBu&quot;</span>)),</span>
+<span id="cb59-11"><a href="data-analyses.html#cb59-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">pt.size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb59-12"><a href="data-analyses.html#cb59-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>())</span>
+<span id="cb59-13"><a href="data-analyses.html#cb59-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-1.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-2.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-3.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-4.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-5.png" width="672" style="display: block; margin: auto;" /><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-6.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-analyses.html#cb60-1" aria-hidden="true" tabindex="-1"></a>md_cells <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>meta.data</span>
+<span id="cb60-2"><a href="data-analyses.html#cb60-2" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_subtype <span class="ot">&lt;-</span> <span class="fu">colnames</span>(md_cells[,names_cols])[<span class="fu">max.col</span>(md_cells[,names_cols], <span class="at">ties.method =</span> <span class="st">&quot;first&quot;</span>)]</span>
+<span id="cb60-3"><a href="data-analyses.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co">#subtypes_levels &lt;- c(&#39;RP&#39;, &#39;dp&#39;, &#39;p&#39;, &#39;pMN&#39;, &#39;p3&#39;, &#39;FP&#39;, &#39;Neuron&#39;, &#39;Neural_crest&#39;, &#39;Mesoderm&#39;)</span></span>
+<span id="cb60-4"><a href="data-analyses.html#cb60-4" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_subtype <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_subtype,</span>
+<span id="cb60-5"><a href="data-analyses.html#cb60-5" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">levels =</span> names_cols)</span>
+<span id="cb60-6"><a href="data-analyses.html#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;Cell_subtype&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="data-analyses.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Cell_subtype)</span></code></pre></div>
+<pre><code>## 
+##           RP           dp            p          pMN           p3           FP 
+##          326          450          158          435          218           46 
+##       Neuron Neural_crest     Mesoderm 
+##          138          286          296</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-analyses.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj_seurat,</span>
+<span id="cb63-2"><a href="data-analyses.html#cb63-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>,</span>
+<span id="cb63-3"><a href="data-analyses.html#cb63-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb63-4"><a href="data-analyses.html#cb63-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb63-5"><a href="data-analyses.html#cb63-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> colors_pal<span class="sc">$</span>Cell_subtype,</span>
+<span id="cb63-6"><a href="data-analyses.html#cb63-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.size =</span> <span class="dv">4</span>,</span>
+<span id="cb63-7"><a href="data-analyses.html#cb63-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">pt.size =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/signatures-subtypes-dimplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="assign-cell-status-depending-on-sox2-expression" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Assign cell status depending on SOX2 expression</h3>
+<p>Most of the cells in this dataset are expected to be neural progenitors.
+They are thus expected to express SOX2.
+We assign a score 1 to cells in which we detect SOX2 (progenitors), 0 to the others (non-progenitors).</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-analyses.html#cb64-1" aria-hidden="true" tabindex="-1"></a>obj_seurat[[<span class="st">&#39;SOX2_value&#39;</span>]] <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>counts[<span class="st">&#39;SOX2&#39;</span>,]</span>
+<span id="cb64-2"><a href="data-analyses.html#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="data-analyses.html#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Value of SOX2 (distribution of the quantity detected in each cell in raw count)</span></span>
+<span id="cb64-4"><a href="data-analyses.html#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>SOX2_value)</span></code></pre></div>
+<pre><code>## 
+##    0    1    2    3    4    5 
+## 1865  387   77   20    2    2</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="data-analyses.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obj_seurat<span class="sc">@</span>meta.data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(SOX2_value))) <span class="sc">+</span></span>
+<span id="cb66-2"><a href="data-analyses.html#cb66-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-3"><a href="data-analyses.html#cb66-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;SOX2 raw count&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-4"><a href="data-analyses.html#cb66-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/sox2-status-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="data-analyses.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SOX2 classification</span></span>
+<span id="cb67-2"><a href="data-analyses.html#cb67-2" aria-hidden="true" tabindex="-1"></a>df_sox2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(obj_seurat[[]][<span class="st">&#39;SOX2_value&#39;</span>] <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb67-3"><a href="data-analyses.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df_sox2) <span class="ot">&lt;-</span> <span class="st">&quot;SOX2_status&quot;</span></span>
+<span id="cb67-4"><a href="data-analyses.html#cb67-4" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>SOX2_status <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df_sox2)</span>
+<span id="cb67-5"><a href="data-analyses.html#cb67-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-6"><a href="data-analyses.html#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells amount according to SOX2 status</span></span>
+<span id="cb67-7"><a href="data-analyses.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df_sox2)</span></code></pre></div>
+<pre><code>## df_sox2
+##    0    1 
+## 1865  488</code></pre>
+</div>
+</div>
+<div id="assign-cell-cycle-scores" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Assign cell-cycle scores</h2>
+<p>We use the function <code>CellCycleScoring</code> of Seurat to assign a cell cycle phase to each cell.
+The genes used for this classification are printed just below (<code>s.genes</code> and <code>g2m.genes</code>).</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="data-analyses.html#cb69-1" aria-hidden="true" tabindex="-1"></a>s.genes <span class="ot">&lt;-</span> cc.genes.updated<span class="fl">.2019</span>[[<span class="st">&#39;s.genes&#39;</span>]][<span class="fu">which</span>(cc.genes.updated<span class="fl">.2019</span>[[<span class="st">&#39;s.genes&#39;</span>]] <span class="sc">%in%</span> <span class="fu">rownames</span>(obj_seurat))]</span>
+<span id="cb69-2"><a href="data-analyses.html#cb69-2" aria-hidden="true" tabindex="-1"></a>g2m.genes <span class="ot">&lt;-</span> cc.genes.updated<span class="fl">.2019</span>[[<span class="st">&#39;g2m.genes&#39;</span>]][<span class="fu">which</span>(cc.genes.updated<span class="fl">.2019</span>[[<span class="st">&#39;g2m.genes&#39;</span>]] <span class="sc">%in%</span> <span class="fu">rownames</span>(obj_seurat))]</span>
+<span id="cb69-3"><a href="data-analyses.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(s.genes)</span></code></pre></div>
+<pre><code>##  [1] &quot;MCM5&quot;     &quot;PCNA&quot;     &quot;FEN1&quot;     &quot;MCM4&quot;     &quot;RRM1&quot;     &quot;UNG&quot;     
+##  [7] &quot;GINS2&quot;    &quot;MCM6&quot;     &quot;DTL&quot;      &quot;UHRF1&quot;    &quot;CENPU&quot;    &quot;HELLS&quot;   
+## [13] &quot;RFC2&quot;     &quot;POLR1B&quot;   &quot;NASP&quot;     &quot;GMNN&quot;     &quot;WDR76&quot;    &quot;SLBP&quot;    
+## [19] &quot;CCNE2&quot;    &quot;UBR7&quot;     &quot;POLD3&quot;    &quot;MSH2&quot;     &quot;ATAD2&quot;    &quot;RAD51&quot;   
+## [25] &quot;RRM2&quot;     &quot;CDC45&quot;    &quot;CDC6&quot;     &quot;EXO1&quot;     &quot;TIPIN&quot;    &quot;DSCC1&quot;   
+## [31] &quot;BLM&quot;      &quot;CASP8AP2&quot; &quot;USP1&quot;     &quot;CLSPN&quot;    &quot;POLA1&quot;    &quot;CHAF1B&quot;  
+## [37] &quot;E2F8&quot;</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="data-analyses.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g2m.genes)</span></code></pre></div>
+<pre><code>##  [1] &quot;HMGB2&quot;   &quot;CDK1&quot;    &quot;NUSAP1&quot;  &quot;UBE2C&quot;   &quot;BIRC5&quot;   &quot;TPX2&quot;    &quot;TOP2A&quot;  
+##  [8] &quot;NDC80&quot;   &quot;CKS2&quot;    &quot;NUF2&quot;    &quot;CKS1B&quot;   &quot;TMPO&quot;    &quot;CENPF&quot;   &quot;TACC3&quot;  
+## [15] &quot;SMC4&quot;    &quot;CKAP2L&quot;  &quot;CKAP2&quot;   &quot;BUB1&quot;    &quot;KIF11&quot;   &quot;ANP32E&quot;  &quot;TUBB4B&quot; 
+## [22] &quot;GTSE1&quot;   &quot;HJURP&quot;   &quot;CDCA3&quot;   &quot;CDC20&quot;   &quot;TTK&quot;     &quot;KIF2C&quot;   &quot;RANGAP1&quot;
+## [29] &quot;NCAPD2&quot;  &quot;DLGAP5&quot;  &quot;ECT2&quot;    &quot;KIF23&quot;   &quot;HMMR&quot;    &quot;AURKA&quot;   &quot;ANLN&quot;   
+## [36] &quot;LBR&quot;     &quot;CKAP5&quot;   &quot;CENPE&quot;   &quot;CTCF&quot;    &quot;NEK2&quot;    &quot;G2E3&quot;    &quot;GAS2L3&quot;</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-analyses.html#cb73-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">CellCycleScoring</span>(obj_seurat,</span>
+<span id="cb73-2"><a href="data-analyses.html#cb73-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">s.features =</span> s.genes,</span>
+<span id="cb73-3"><a href="data-analyses.html#cb73-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">g2m.features =</span> g2m.genes,</span>
+<span id="cb73-4"><a href="data-analyses.html#cb73-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">set.ident =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb73-5"><a href="data-analyses.html#cb73-5" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Phase <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>Phase)</span>
+<span id="cb73-6"><a href="data-analyses.html#cb73-6" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">$</span>CC.Difference <span class="ot">&lt;-</span> obj_seurat<span class="sc">$</span>S.Score <span class="sc">-</span> obj_seurat<span class="sc">$</span>G2M.Score</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="data-analyses.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj_seurat,</span>
+<span id="cb74-2"><a href="data-analyses.html#cb74-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>,</span>
+<span id="cb74-3"><a href="data-analyses.html#cb74-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb74-4"><a href="data-analyses.html#cb74-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">group.by =</span> <span class="st">&quot;Phase&quot;</span>,</span>
+<span id="cb74-5"><a href="data-analyses.html#cb74-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> colors_pal<span class="sc">$</span>Phase,</span>
+<span id="cb74-6"><a href="data-analyses.html#cb74-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb74-7"><a href="data-analyses.html#cb74-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.size =</span> <span class="dv">4</span>,</span>
+<span id="cb74-8"><a href="data-analyses.html#cb74-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">pt.size =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/signatures-cell-cycle-dimplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="summary-plots" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Summary plots</h2>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-analyses.html#cb75-1" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">unique</span>(<span class="fu">unlist</span>(markers_genes)))</span>
+<span id="cb75-2"><a href="data-analyses.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="data-analyses.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CC Phase</span></span>
+<span id="cb75-4"><a href="data-analyses.html#cb75-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&#39;Phase&#39;</span></span>
+<span id="cb75-5"><a href="data-analyses.html#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat[[]][x])</span></code></pre></div>
+<pre><code>## 
+##  G1 G2M   S 
+## 847 763 743</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-analyses.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(obj_seurat[[]][x]))</span></code></pre></div>
+<pre><code>## 
+##        G1       G2M         S 
+## 0.3599660 0.3242669 0.3157671</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-analyses.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> x</span>
+<span id="cb79-2"><a href="data-analyses.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-3"><a href="data-analyses.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DotPlot</span>(obj_seurat,</span>
+<span id="cb79-4"><a href="data-analyses.html#cb79-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">features =</span> features) <span class="sc">+</span></span>
+<span id="cb79-5"><a href="data-analyses.html#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RotatedAxis</span>() <span class="sc">+</span></span>
+<span id="cb79-6"><a href="data-analyses.html#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb79-7"><a href="data-analyses.html#cb79-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="data-analyses.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obj_seurat[[]], <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&#39;orig.ident&#39;</span>, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb80-2"><a href="data-analyses.html#cb80-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> (..count..)<span class="sc">/</span><span class="fu">sum</span>(..count..))) <span class="sc">+</span></span>
+<span id="cb80-3"><a href="data-analyses.html#cb80-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors_pal<span class="sc">$</span>Phase) <span class="sc">+</span></span>
+<span id="cb80-4"><a href="data-analyses.html#cb80-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb80-5"><a href="data-analyses.html#cb80-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb80-6"><a href="data-analyses.html#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Proportion of cells in each cell cycle phase&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="data-analyses.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell types</span></span>
+<span id="cb81-2"><a href="data-analyses.html#cb81-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&#39;Cell_type&#39;</span></span>
+<span id="cb81-3"><a href="data-analyses.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat[[]][x])</span></code></pre></div>
+<pre><code>## 
+##   Progenitor       Neuron Neural_crest     Mesoderm 
+##          968          433          581          371</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="data-analyses.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(obj_seurat[[]][x]))</span></code></pre></div>
+<pre><code>## 
+##   Progenitor       Neuron Neural_crest     Mesoderm 
+##    0.4113897    0.1840204    0.2469188    0.1576711</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="data-analyses.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> x</span>
+<span id="cb85-2"><a href="data-analyses.html#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="data-analyses.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DotPlot</span>(obj_seurat,</span>
+<span id="cb85-4"><a href="data-analyses.html#cb85-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">features =</span> features) <span class="sc">+</span></span>
+<span id="cb85-5"><a href="data-analyses.html#cb85-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RotatedAxis</span>() <span class="sc">+</span></span>
+<span id="cb85-6"><a href="data-analyses.html#cb85-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb85-7"><a href="data-analyses.html#cb85-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="data-analyses.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obj_seurat[[]], <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&#39;orig.ident&#39;</span>, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb86-2"><a href="data-analyses.html#cb86-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> (..count..)<span class="sc">/</span><span class="fu">sum</span>(..count..))) <span class="sc">+</span></span>
+<span id="cb86-3"><a href="data-analyses.html#cb86-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors_pal<span class="sc">$</span>Cell_type) <span class="sc">+</span></span>
+<span id="cb86-4"><a href="data-analyses.html#cb86-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb86-5"><a href="data-analyses.html#cb86-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb86-6"><a href="data-analyses.html#cb86-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Proportion of progenitors and neurons&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-4.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="data-analyses.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell subtypes</span></span>
+<span id="cb87-2"><a href="data-analyses.html#cb87-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&#39;Cell_subtype&#39;</span></span>
+<span id="cb87-3"><a href="data-analyses.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat[[]][x])</span></code></pre></div>
+<pre><code>## 
+##           RP           dp            p          pMN           p3           FP 
+##          326          450          158          435          218           46 
+##       Neuron Neural_crest     Mesoderm 
+##          138          286          296</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="data-analyses.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(obj_seurat[[]][x]))</span></code></pre></div>
+<pre><code>## 
+##           RP           dp            p          pMN           p3           FP 
+##   0.13854654   0.19124522   0.06714832   0.18487038   0.09264768   0.01954951 
+##       Neuron Neural_crest     Mesoderm 
+##   0.05864853   0.12154696   0.12579686</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="data-analyses.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> x</span>
+<span id="cb91-2"><a href="data-analyses.html#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="data-analyses.html#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DotPlot</span>(obj_seurat,</span>
+<span id="cb91-4"><a href="data-analyses.html#cb91-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">features =</span> features) <span class="sc">+</span></span>
+<span id="cb91-5"><a href="data-analyses.html#cb91-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RotatedAxis</span>() <span class="sc">+</span></span>
+<span id="cb91-6"><a href="data-analyses.html#cb91-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb91-7"><a href="data-analyses.html#cb91-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-5.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="data-analyses.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obj_seurat[[]], <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&#39;orig.ident&#39;</span>, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb92-2"><a href="data-analyses.html#cb92-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> (..count..)<span class="sc">/</span><span class="fu">sum</span>(..count..))) <span class="sc">+</span></span>
+<span id="cb92-3"><a href="data-analyses.html#cb92-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors_pal<span class="sc">$</span>Cell_subtype) <span class="sc">+</span></span>
+<span id="cb92-4"><a href="data-analyses.html#cb92-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb92-5"><a href="data-analyses.html#cb92-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb92-6"><a href="data-analyses.html#cb92-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Proportion of subtypes&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-6.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="data-analyses.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SOX2 status</span></span>
+<span id="cb93-2"><a href="data-analyses.html#cb93-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&#39;SOX2_status&#39;</span></span>
+<span id="cb93-3"><a href="data-analyses.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(obj_seurat[[]][x])</span></code></pre></div>
+<pre><code>## 
+##    0    1 
+## 1865  488</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="data-analyses.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(obj_seurat[[]][x]))</span></code></pre></div>
+<pre><code>## 
+##         0         1 
+## 0.7926052 0.2073948</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="data-analyses.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> x</span>
+<span id="cb97-2"><a href="data-analyses.html#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="data-analyses.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DotPlot</span>(obj_seurat,</span>
+<span id="cb97-4"><a href="data-analyses.html#cb97-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">features =</span> features) <span class="sc">+</span></span>
+<span id="cb97-5"><a href="data-analyses.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">RotatedAxis</span>() <span class="sc">+</span></span>
+<span id="cb97-6"><a href="data-analyses.html#cb97-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb97-7"><a href="data-analyses.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-7.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="data-analyses.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(obj_seurat[[]], <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&#39;orig.ident&#39;</span>, <span class="at">fill =</span> x)) <span class="sc">+</span></span>
+<span id="cb98-2"><a href="data-analyses.html#cb98-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> (..count..)<span class="sc">/</span><span class="fu">sum</span>(..count..))) <span class="sc">+</span></span>
+<span id="cb98-3"><a href="data-analyses.html#cb98-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> T) <span class="sc">+</span></span>
+<span id="cb98-4"><a href="data-analyses.html#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb98-5"><a href="data-analyses.html#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb98-6"><a href="data-analyses.html#cb98-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Proportion of SOX2+ / SOX2- cells&quot;</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/summary-plots-8.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="second-normalization-step" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Second normalization step</h2>
+<p>From now-on, the data of the previous normalization will not be used anymore.
+It was a quick and basic normalization used only to pre-process the data.
+For the next steps, we will use an improved (but more time-consuming) normalization strategy with SCTransform.
+This approach removes the need for heuristic steps such as pseudocount addition or log-transformation.
+We also regress out the differences between cycling and non cycling cells.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="data-analyses.html#cb99-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">SCTransform</span>(<span class="at">object =</span> obj_seurat,</span>
+<span id="cb99-2"><a href="data-analyses.html#cb99-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">vars.to.regress =</span> <span class="fu">c</span>(<span class="st">&quot;CC.Difference&quot;</span>),</span>
+<span id="cb99-3"><a href="data-analyses.html#cb99-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">do.scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb99-4"><a href="data-analyses.html#cb99-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="find-variable-genes" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Find variable genes</h2>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="data-analyses.html#cb100-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">FindVariableFeatures</span>(obj_seurat, <span class="at">selection.method =</span> <span class="st">&quot;vst&quot;</span>, <span class="at">nfeatures =</span> <span class="dv">2000</span>)</span>
+<span id="cb100-2"><a href="data-analyses.html#cb100-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">VariableFeatures</span>(obj_seurat), <span class="dv">10</span>)</span>
+<span id="cb100-3"><a href="data-analyses.html#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="data-analyses.html#cb100-4" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">VariableFeaturePlot</span>(obj_seurat)</span>
+<span id="cb100-5"><a href="data-analyses.html#cb100-5" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">LabelPoints</span>(<span class="at">plot =</span> plot1, <span class="at">points =</span> top10, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb100-6"><a href="data-analyses.html#cb100-6" aria-hidden="true" tabindex="-1"></a>plot2</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/find-hvg-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clustering" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Clustering</h2>
+<p>We use SC3 to cluster the cells so we can use the same k for all the analyses (the number of clusters in Seurat are defined by the resolution and can vary).</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="data-analyses.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run SC3</span></span>
+<span id="cb101-2"><a href="data-analyses.html#cb101-2" aria-hidden="true" tabindex="-1"></a>obj_sce <span class="ot">&lt;-</span> <span class="fu">as.SingleCellExperiment</span>(obj_seurat)</span>
+<span id="cb101-3"><a href="data-analyses.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(obj_sce)<span class="sc">$</span>feature_symbol <span class="ot">&lt;-</span> <span class="fu">rownames</span>(obj_sce)</span>
+<span id="cb101-4"><a href="data-analyses.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">counts</span>(obj_sce) <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">counts</span>(obj_sce))</span>
+<span id="cb101-5"><a href="data-analyses.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="fu">logcounts</span>(obj_sce) <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">logcounts</span>(obj_sce))</span>
+<span id="cb101-6"><a href="data-analyses.html#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="data-analyses.html#cb101-7" aria-hidden="true" tabindex="-1"></a>num_k <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb101-8"><a href="data-analyses.html#cb101-8" aria-hidden="true" tabindex="-1"></a>obj_sce <span class="ot">&lt;-</span> <span class="fu">sc3</span>(obj_sce,</span>
+<span id="cb101-9"><a href="data-analyses.html#cb101-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">ks =</span> num_k, <span class="at">pct_dropout_min =</span> <span class="dv">10</span>,</span>
+<span id="cb101-10"><a href="data-analyses.html#cb101-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">pct_dropout_max =</span> <span class="dv">90</span>,</span>
+<span id="cb101-11"><a href="data-analyses.html#cb101-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">biology =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="data-analyses.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize SC3 clusters</span></span>
+<span id="cb102-2"><a href="data-analyses.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sc3_plot_consensus</span>(obj_sce, <span class="at">k =</span> num_k, <span class="at">show_pdata =</span> <span class="fu">c</span>(<span class="st">&quot;sc3_9_clusters&quot;</span>, <span class="st">&quot;Cell_subtype&quot;</span>, <span class="st">&quot;Phase&quot;</span>))</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/clustering-sc3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="data-analyses.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sc3_plot_silhouette</span>(obj_sce, <span class="at">k =</span> num_k)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/clustering-sc3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="data-analyses.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put SC3 results inside Seurat object</span></span>
+<span id="cb104-2"><a href="data-analyses.html#cb104-2" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>meta.data<span class="sc">$</span>sc3_9_clusters <span class="ot">&lt;-</span> <span class="fu">colData</span>(obj_sce)<span class="sc">$</span>sc3_9_clusters</span>
+<span id="cb104-3"><a href="data-analyses.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">DimPlot</span>(obj_seurat,</span>
+<span id="cb104-4"><a href="data-analyses.html#cb104-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>,</span>
+<span id="cb104-5"><a href="data-analyses.html#cb104-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb104-6"><a href="data-analyses.html#cb104-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">group.by =</span> <span class="st">&quot;sc3_9_clusters&quot;</span>,</span>
+<span id="cb104-7"><a href="data-analyses.html#cb104-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">as.vector</span>(colors_pal<span class="sc">$</span>Clusters),</span>
+<span id="cb104-8"><a href="data-analyses.html#cb104-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb104-9"><a href="data-analyses.html#cb104-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.size =</span> <span class="dv">4</span>,</span>
+<span id="cb104-10"><a href="data-analyses.html#cb104-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">pt.size =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/clustering-sc3-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Here are the contingency tables to visualize how many cells from the different cell types are in each cluster.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="data-analyses.html#cb105-1" aria-hidden="true" tabindex="-1"></a>cont_table_n <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>meta.data <span class="sc">%&gt;%</span></span>
+<span id="cb105-2"><a href="data-analyses.html#cb105-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cell_subtype, sc3_9_clusters) <span class="sc">%&gt;%</span></span>
+<span id="cb105-3"><a href="data-analyses.html#cb105-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb105-4"><a href="data-analyses.html#cb105-4" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">spread</span>(Cell_subtype, n)</span>
+<span id="cb105-5"><a href="data-analyses.html#cb105-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-6"><a href="data-analyses.html#cb105-6" aria-hidden="true" tabindex="-1"></a>cont_table_prop <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>meta.data <span class="sc">%&gt;%</span></span>
+<span id="cb105-7"><a href="data-analyses.html#cb105-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Cell_subtype, sc3_9_clusters) <span class="sc">%&gt;%</span></span>
+<span id="cb105-8"><a href="data-analyses.html#cb105-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb105-9"><a href="data-analyses.html#cb105-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb105-10"><a href="data-analyses.html#cb105-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;Cell_subtype&quot;</span>,<span class="st">&quot;sc3_9_clusters&quot;</span>,<span class="st">&quot;prop&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb105-11"><a href="data-analyses.html#cb105-11" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">spread</span>(Cell_subtype, prop)</span>
+<span id="cb105-12"><a href="data-analyses.html#cb105-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-13"><a href="data-analyses.html#cb105-13" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(cont_table_n,</span>
+<span id="cb105-14"><a href="data-analyses.html#cb105-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">extensions =</span> <span class="fu">c</span>(<span class="st">&#39;Buttons&#39;</span>, <span class="st">&#39;Scroller&#39;</span>),</span>
+<span id="cb105-15"><a href="data-analyses.html#cb105-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb105-16"><a href="data-analyses.html#cb105-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb105-17"><a href="data-analyses.html#cb105-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
+<span id="cb105-18"><a href="data-analyses.html#cb105-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">deferRender =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb105-19"><a href="data-analyses.html#cb105-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb105-20"><a href="data-analyses.html#cb105-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollX =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb105-21"><a href="data-analyses.html#cb105-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">scroller =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div id="htmlwidget-437041193ce0df7adeb2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-437041193ce0df7adeb2">{"x":{"filter":"none","extensions":["Buttons","Scroller"],"data":[["1","2","3","4","5","6","7","8","9"],["1","2","3","4","5","6","7","8","9"],[4,30,null,1,50,231,4,2,4],[null,367,1,5,49,22,null,1,5],[null,155,null,null,null,null,null,null,3],[4,18,13,3,null,null,353,6,38],[null,38,null,1,null,1,24,106,48],[1,1,null,2,null,null,null,41,1],[null,8,1,2,2,3,1,null,121],[104,49,3,1,7,6,1,13,102],[294,1,1,null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>sc3_9_clusters<\/th>\n      <th>RP<\/th>\n      <th>dp<\/th>\n      <th>p<\/th>\n      <th>pMN<\/th>\n      <th>p3<\/th>\n      <th>FP<\/th>\n      <th>Neuron<\/th>\n      <th>Neural_crest<\/th>\n      <th>Mesoderm<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["csv","pdf"],"deferRender":true,"scrollY":200,"scrollX":true,"scroller":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="data-analyses.html#cb106-1" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(cont_table_prop,</span>
+<span id="cb106-2"><a href="data-analyses.html#cb106-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">extensions =</span> <span class="fu">c</span>(<span class="st">&#39;Buttons&#39;</span>, <span class="st">&#39;Scroller&#39;</span>),</span>
+<span id="cb106-3"><a href="data-analyses.html#cb106-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb106-4"><a href="data-analyses.html#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dom =</span> <span class="st">&#39;Bfrtip&#39;</span>,</span>
+<span id="cb106-5"><a href="data-analyses.html#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">buttons =</span> <span class="fu">c</span>(<span class="st">&#39;csv&#39;</span>, <span class="st">&#39;pdf&#39;</span>),</span>
+<span id="cb106-6"><a href="data-analyses.html#cb106-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">deferRender =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb106-7"><a href="data-analyses.html#cb106-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollY =</span> <span class="dv">200</span>,</span>
+<span id="cb106-8"><a href="data-analyses.html#cb106-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollX =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb106-9"><a href="data-analyses.html#cb106-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">scroller =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div id="htmlwidget-ed6b6332fc150463fd9f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed6b6332fc150463fd9f">{"x":{"filter":"none","extensions":["Buttons","Scroller"],"data":[["1","2","3","4","5","6","7","8","9"],["1","2","3","4","5","6","7","8","9"],[0.0122699386503067,0.0920245398773006,null,0.00306748466257669,0.153374233128834,0.708588957055215,0.0122699386503067,0.00613496932515337,0.0122699386503067],[null,0.815555555555556,0.00222222222222222,0.0111111111111111,0.108888888888889,0.0488888888888889,null,0.00222222222222222,0.0111111111111111],[null,0.981012658227848,null,null,null,null,null,null,0.0189873417721519],[0.00919540229885057,0.0413793103448276,0.0298850574712644,0.00689655172413793,null,null,0.811494252873563,0.0137931034482759,0.0873563218390805],[null,0.174311926605505,null,0.00458715596330275,null,0.00458715596330275,0.110091743119266,0.486238532110092,0.220183486238532],[0.0217391304347826,0.0217391304347826,null,0.0434782608695652,null,null,null,0.891304347826087,0.0217391304347826],[null,0.0579710144927536,0.0072463768115942,0.0144927536231884,0.0144927536231884,0.0217391304347826,0.0072463768115942,null,0.876811594202899],[0.363636363636364,0.171328671328671,0.0104895104895105,0.0034965034965035,0.0244755244755245,0.020979020979021,0.0034965034965035,0.0454545454545455,0.356643356643357],[0.993243243243243,0.00337837837837838,0.00337837837837838,null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>sc3_9_clusters<\/th>\n      <th>RP<\/th>\n      <th>dp<\/th>\n      <th>p<\/th>\n      <th>pMN<\/th>\n      <th>p3<\/th>\n      <th>FP<\/th>\n      <th>Neuron<\/th>\n      <th>Neural_crest<\/th>\n      <th>Mesoderm<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","buttons":["csv","pdf"],"deferRender":true,"scrollY":200,"scrollX":true,"scroller":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="find-de-genes-between-clusters" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Find DE genes between clusters</h2>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="data-analyses.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;sc3_9_clusters&#39;</span></span>
+<span id="cb107-2"><a href="data-analyses.html#cb107-2" aria-hidden="true" tabindex="-1"></a>markers_DE <span class="ot">&lt;-</span> <span class="fu">FindAllMarkers</span>(obj_seurat,</span>
+<span id="cb107-3"><a href="data-analyses.html#cb107-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">only.pos =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb107-4"><a href="data-analyses.html#cb107-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">min.pct =</span> <span class="fl">0.25</span>,</span>
+<span id="cb107-5"><a href="data-analyses.html#cb107-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>,</span>
+<span id="cb107-6"><a href="data-analyses.html#cb107-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">test.use =</span> <span class="st">&quot;MAST&quot;</span>)</span>
+<span id="cb107-7"><a href="data-analyses.html#cb107-7" aria-hidden="true" tabindex="-1"></a>markers_DE <span class="ot">&lt;-</span> markers_DE <span class="sc">%&gt;%</span> <span class="fu">filter</span>(p_val <span class="sc">&lt;</span> <span class="fl">1e-2</span>)</span>
+<span id="cb107-8"><a href="data-analyses.html#cb107-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-9"><a href="data-analyses.html#cb107-9" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> markers_DE <span class="sc">%&gt;%</span></span>
+<span id="cb107-10"><a href="data-analyses.html#cb107-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(p_val <span class="sc">&lt;</span> <span class="fl">1e-2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb107-11"><a href="data-analyses.html#cb107-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb107-12"><a href="data-analyses.html#cb107-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> avg_log2FC)</span>
+<span id="cb107-13"><a href="data-analyses.html#cb107-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-14"><a href="data-analyses.html#cb107-14" aria-hidden="true" tabindex="-1"></a><span class="fu">DoHeatmap</span>(obj_seurat,</span>
+<span id="cb107-15"><a href="data-analyses.html#cb107-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">features =</span> top10<span class="sc">$</span>gene,</span>
+<span id="cb107-16"><a href="data-analyses.html#cb107-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb107-17"><a href="data-analyses.html#cb107-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>))</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/find-de-clusters-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="find-de-genes-between-subtypes" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Find DE genes between subtypes</h2>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="data-analyses.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;Cell_subtype&#39;</span></span>
+<span id="cb108-2"><a href="data-analyses.html#cb108-2" aria-hidden="true" tabindex="-1"></a>markers_Subtype <span class="ot">&lt;-</span> <span class="fu">FindAllMarkers</span>(obj_seurat,</span>
+<span id="cb108-3"><a href="data-analyses.html#cb108-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">only.pos =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb108-4"><a href="data-analyses.html#cb108-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">min.pct =</span> <span class="fl">0.25</span>,</span>
+<span id="cb108-5"><a href="data-analyses.html#cb108-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>,</span>
+<span id="cb108-6"><a href="data-analyses.html#cb108-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">test.use =</span> <span class="st">&quot;MAST&quot;</span>)</span>
+<span id="cb108-7"><a href="data-analyses.html#cb108-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-8"><a href="data-analyses.html#cb108-8" aria-hidden="true" tabindex="-1"></a>markers_Subtype <span class="ot">&lt;-</span> markers_Subtype <span class="sc">%&gt;%</span> <span class="fu">filter</span>(p_val <span class="sc">&lt;</span> <span class="fl">1e-2</span>)</span>
+<span id="cb108-9"><a href="data-analyses.html#cb108-9" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> markers_Subtype <span class="sc">%&gt;%</span></span>
+<span id="cb108-10"><a href="data-analyses.html#cb108-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb108-11"><a href="data-analyses.html#cb108-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> avg_log2FC)</span>
+<span id="cb108-12"><a href="data-analyses.html#cb108-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-13"><a href="data-analyses.html#cb108-13" aria-hidden="true" tabindex="-1"></a><span class="fu">DoHeatmap</span>(obj_seurat,</span>
+<span id="cb108-14"><a href="data-analyses.html#cb108-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">features =</span> top10<span class="sc">$</span>gene,</span>
+<span id="cb108-15"><a href="data-analyses.html#cb108-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb108-16"><a href="data-analyses.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">5</span>))</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/find-de-subtypes-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="find-de-genes-between-sox2-and-sox2--populations" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> Find DE genes between SOX2+ and SOX2- populations</h2>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="data-analyses.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;SOX2_status&#39;</span></span>
+<span id="cb109-2"><a href="data-analyses.html#cb109-2" aria-hidden="true" tabindex="-1"></a>markers_SOX2 <span class="ot">&lt;-</span> <span class="fu">FindAllMarkers</span>(obj_seurat,</span>
+<span id="cb109-3"><a href="data-analyses.html#cb109-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">only.pos =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb109-4"><a href="data-analyses.html#cb109-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">min.pct =</span> <span class="fl">0.25</span>,</span>
+<span id="cb109-5"><a href="data-analyses.html#cb109-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">logfc.threshold =</span> <span class="fl">0.25</span>,</span>
+<span id="cb109-6"><a href="data-analyses.html#cb109-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">test.use =</span> <span class="st">&quot;MAST&quot;</span>)</span>
+<span id="cb109-7"><a href="data-analyses.html#cb109-7" aria-hidden="true" tabindex="-1"></a>markers_SOX2 <span class="ot">&lt;-</span> markers_SOX2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(p_val <span class="sc">&lt;</span> <span class="fl">1e-2</span>)</span>
+<span id="cb109-8"><a href="data-analyses.html#cb109-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-9"><a href="data-analyses.html#cb109-9" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> markers_SOX2 <span class="sc">%&gt;%</span></span>
+<span id="cb109-10"><a href="data-analyses.html#cb109-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb109-11"><a href="data-analyses.html#cb109-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> avg_log2FC)</span>
+<span id="cb109-12"><a href="data-analyses.html#cb109-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-13"><a href="data-analyses.html#cb109-13" aria-hidden="true" tabindex="-1"></a><span class="fu">DoHeatmap</span>(obj_seurat,</span>
+<span id="cb109-14"><a href="data-analyses.html#cb109-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">features =</span> top10<span class="sc">$</span>gene,</span>
+<span id="cb109-15"><a href="data-analyses.html#cb109-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb109-16"><a href="data-analyses.html#cb109-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>))</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/find-de-sox2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="save-data" class="section level2" number="3.11">
+<h2><span class="header-section-number">3.11</span> Save data</h2>
+<p>We save data both as RDS objects and TSV table to have a direct access to metadata if needed.
+For reproducibility or re-analyses purposes, use RDS objects.
+They can be loaded with the <code>readRDS()</code> command.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="data-analyses.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj_seurat,</span>
+<span id="cb110-2"><a href="data-analyses.html#cb110-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_obj_seurat_final.rds&quot;</span>))</span>
+<span id="cb110-3"><a href="data-analyses.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj_sce,</span>
+<span id="cb110-4"><a href="data-analyses.html#cb110-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_obj_sce.rds&quot;</span>))</span>
+<span id="cb110-5"><a href="data-analyses.html#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(markers_DE,</span>
+<span id="cb110-6"><a href="data-analyses.html#cb110-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_markers_clustering.rds&quot;</span>))</span>
+<span id="cb110-7"><a href="data-analyses.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(markers_Subtype,</span>
+<span id="cb110-8"><a href="data-analyses.html#cb110-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_markers_Subtype.rds&quot;</span>))</span>
+<span id="cb110-9"><a href="data-analyses.html#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(markers_SOX2,</span>
+<span id="cb110-10"><a href="data-analyses.html#cb110-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_markers_SOX2.rds&quot;</span>))</span>
+<span id="cb110-11"><a href="data-analyses.html#cb110-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-12"><a href="data-analyses.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save metadata on cells</span></span>
+<span id="cb110-13"><a href="data-analyses.html#cb110-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(obj_seurat[[]],</span>
+<span id="cb110-14"><a href="data-analyses.html#cb110-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/raw/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_cells_metadata.tsv&quot;</span>),</span>
+<span id="cb110-15"><a href="data-analyses.html#cb110-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb110-16"><a href="data-analyses.html#cb110-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb110-17"><a href="data-analyses.html#cb110-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Save metadata on genes</span></span>
+<span id="cb110-18"><a href="data-analyses.html#cb110-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features,</span>
+<span id="cb110-19"><a href="data-analyses.html#cb110-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/raw/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_genes_metadata.tsv&quot;</span>),</span>
+<span id="cb110-20"><a href="data-analyses.html#cb110-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb110-21"><a href="data-analyses.html#cb110-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-pre-processing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="session-info.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

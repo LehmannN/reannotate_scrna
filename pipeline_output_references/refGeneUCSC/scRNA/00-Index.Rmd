@@ -1,0 +1,39 @@
+---
+title: "Report"
+author: "Nathalie Lehmann"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+documentclass: book
+bibliography: []
+biblio-style: apalike
+link-citations: yes
+github-repo: ""
+params:
+ rds: rds
+ gtf: gtf
+---
+
+# Introduction
+
+```{r biblio, include=FALSE}
+# Automatically creates a bib database for R packages
+knitr::write_bib(c(
+				   .packages(), 'bookdown', 'knitr', 'rmarkdown'),
+				 'env/packages.bib')
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+# Set parameters values
+knitr::opts_chunk$set(
+					  fig.align = "center",
+					  fig.retina = 2,
+					  fig.fullwidth = TRUE,
+					  dev = c('png', 'pdf'),
+					  cache = TRUE,
+					  cache.lazy = FALSE,
+					  warning = FALSE,
+					  message = FALSE,
+					  echo = c(params$rds, params$gtf))
+```
+
+We here present the analyses of `r params$gtf`.

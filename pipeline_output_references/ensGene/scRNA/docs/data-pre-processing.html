@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title> 2 Data pre-processing | Report</title>
+  <meta name="description" content=" 2 Data pre-processing | Report" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content=" 2 Data pre-processing | Report" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content=" 2 Data pre-processing | Report" />
+  
+  
+  
+
+<meta name="author" content="Nathalie Lehmann" />
+
+
+<meta name="date" content="2021-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="data-analyses.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libs/pdfmake-1.10.20/pdfmake.js"></script>
+<script src="libs/pdfmake-1.10.20/vfs_fonts.js"></script>
+<link href="libs/dt-ext-buttons-1.10.20/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-buttons-1.10.20/js/dataTables.buttons.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.flash.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.html5.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.colVis.min.js"></script>
+<script src="libs/dt-ext-buttons-1.10.20/js/buttons.print.min.js"></script>
+<link href="libs/dt-ext-scroller-1.10.20/css/scroller.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-scroller-1.10.20/js/dataTables.scroller.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-pre-processing.html"><a href="data-pre-processing.html"><i class="fa fa-check"></i><b>2</b> Data pre-processing</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#calculate-qc-metrics"><i class="fa fa-check"></i><b>2.1</b> Calculate QC metrics</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-metrics"><i class="fa fa-check"></i><b>2.1.1</b> Cells metrics</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#features-metrics"><i class="fa fa-check"></i><b>2.1.2</b> Features metrics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#plot-qc-metrics"><i class="fa fa-check"></i><b>2.2</b> Plot QC metrics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-metrics-1"><i class="fa fa-check"></i><b>2.2.1</b> Cells metrics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#genes-metrics"><i class="fa fa-check"></i><b>2.2.2</b> Genes metrics</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-pre-processing.html"><a href="data-pre-processing.html#highly-expressed-genes"><i class="fa fa-check"></i><b>2.2.3</b> Highly expressed genes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-pre-processing.html"><a href="data-pre-processing.html#filter-data"><i class="fa fa-check"></i><b>2.3</b> Filter data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-pre-processing.html"><a href="data-pre-processing.html#cells-filtering"><i class="fa fa-check"></i><b>2.3.1</b> Cells filtering</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-pre-processing.html"><a href="data-pre-processing.html#genes-filtering"><i class="fa fa-check"></i><b>2.3.2</b> Genes filtering</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-analyses.html"><a href="data-analyses.html"><i class="fa fa-check"></i><b>3</b> Data analyses</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-analyses.html"><a href="data-analyses.html#data-preparation-to-get-scores"><i class="fa fa-check"></i><b>3.1</b> Data preparation to get scores</a></li>
+<li class="chapter" data-level="3.2" data-path="data-analyses.html"><a href="data-analyses.html#identify-populations"><i class="fa fa-check"></i><b>3.2</b> Identify populations</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data-analyses.html"><a href="data-analyses.html#get-stats-on-some-marker-genes"><i class="fa fa-check"></i><b>3.2.1</b> Get stats on some marker genes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-analyses.html"><a href="data-analyses.html#plot-each-marker-genes"><i class="fa fa-check"></i><b>3.2.2</b> Plot each marker genes</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-analyses.html"><a href="data-analyses.html#classify-cells-based-on-known-markers"><i class="fa fa-check"></i><b>3.2.3</b> Classify cells based on known markers</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-status-depending-on-sox2-expression"><i class="fa fa-check"></i><b>3.2.4</b> Assign cell status depending on SOX2 expression</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-cycle-scores"><i class="fa fa-check"></i><b>3.3</b> Assign cell-cycle scores</a></li>
+<li class="chapter" data-level="3.4" data-path="data-analyses.html"><a href="data-analyses.html#summary-plots"><i class="fa fa-check"></i><b>3.4</b> Summary plots</a></li>
+<li class="chapter" data-level="3.5" data-path="data-analyses.html"><a href="data-analyses.html#second-normalization-step"><i class="fa fa-check"></i><b>3.5</b> Second normalization step</a></li>
+<li class="chapter" data-level="3.6" data-path="data-analyses.html"><a href="data-analyses.html#find-variable-genes"><i class="fa fa-check"></i><b>3.6</b> Find variable genes</a></li>
+<li class="chapter" data-level="3.7" data-path="data-analyses.html"><a href="data-analyses.html#clustering"><i class="fa fa-check"></i><b>3.7</b> Clustering</a></li>
+<li class="chapter" data-level="3.8" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-clusters"><i class="fa fa-check"></i><b>3.8</b> Find DE genes between clusters</a></li>
+<li class="chapter" data-level="3.9" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-subtypes"><i class="fa fa-check"></i><b>3.9</b> Find DE genes between subtypes</a></li>
+<li class="chapter" data-level="3.10" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-sox2-and-sox2--populations"><i class="fa fa-check"></i><b>3.10</b> Find DE genes between SOX2+ and SOX2- populations</a></li>
+<li class="chapter" data-level="3.11" data-path="data-analyses.html"><a href="data-analyses.html#save-data"><i class="fa fa-check"></i><b>3.11</b> Save data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>4</b> Session info</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Report</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-pre-processing" class="section level1" number="2">
+<h1><span class="header-section-number"> 2</span> Data pre-processing</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-pre-processing.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
+<span id="cb1-2"><a href="data-pre-processing.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="data-pre-processing.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scater)</span>
+<span id="cb1-4"><a href="data-pre-processing.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-5"><a href="data-pre-processing.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb1-6"><a href="data-pre-processing.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb1-7"><a href="data-pre-processing.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-8"><a href="data-pre-processing.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-9"><a href="data-pre-processing.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SC3)</span></code></pre></div>
+<p>We start by loading the Seurat object stored as a <code>RDS</code> object.
+It contains all the single-cell data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-pre-processing.html#cb2-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> params<span class="sc">$</span>rds)</span>
+<span id="cb2-2"><a href="data-pre-processing.html#cb2-2" aria-hidden="true" tabindex="-1"></a>obj_seurat[[<span class="st">&quot;orig.ident&quot;</span>]] <span class="ot">&lt;-</span> params<span class="sc">$</span>gtf</span>
+<span id="cb2-3"><a href="data-pre-processing.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Idents</span>(obj_seurat) <span class="ot">&lt;-</span> <span class="st">&#39;orig.ident&#39;</span></span></code></pre></div>
+<p>At this step of the pre-processing, the data consists of 2481 cells
+and 19367 genes.
+Before going any further, we start by removing the genes that are not detected
+in our dataset (if any).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-pre-processing.html#cb3-1" aria-hidden="true" tabindex="-1"></a>obj_counts <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>counts</span>
+<span id="cb3-2"><a href="data-pre-processing.html#cb3-2" aria-hidden="true" tabindex="-1"></a>features_keep <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obj_counts) <span class="sc">&gt;</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="data-pre-processing.html#cb3-3" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> obj_seurat[features_keep, ]</span>
+<span id="cb3-4"><a href="data-pre-processing.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(features_keep)</span></code></pre></div>
+<pre><code>## features_keep
+## FALSE  TRUE 
+##  1617 17750</code></pre>
+<p>There are 17750 remaining genes (detected at least twice).
+We now load a BioMart query table obtained from <a href="BioMart%20data%20mining%20tool">https://www.ensembl.org/biomart/martview</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-pre-processing.html#cb5-1" aria-hidden="true" tabindex="-1"></a>biomart <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&#39;biomart.txt&#39;</span>,</span>
+<span id="cb5-2"><a href="data-pre-processing.html#cb5-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-3"><a href="data-pre-processing.html#cb5-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep=</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span></code></pre></div>
+<div id="calculate-qc-metrics" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Calculate QC metrics</h2>
+<p>In the following sections, we calculate the value of standard cell metrics and store it in the Seurat object.</p>
+<div id="cells-metrics" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Cells metrics</h3>
+<div id="mitochondrial-genes" class="section level4" number="2.1.1.1">
+<h4><span class="header-section-number">2.1.1.1</span> Mitochondrial genes</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-pre-processing.html#cb6-1" aria-hidden="true" tabindex="-1"></a>genes_MT <span class="ot">&lt;-</span> biomart <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="data-pre-processing.html#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Chromosome.scaffold.name <span class="sc">==</span> <span class="st">&quot;MT&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="data-pre-processing.html#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Gene.type <span class="sc">==</span> <span class="st">&quot;protein_coding&quot;</span>)</span>
+<span id="cb6-4"><a href="data-pre-processing.html#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="data-pre-processing.html#cb6-5" aria-hidden="true" tabindex="-1"></a>features <span class="ot">&lt;-</span> genes_MT[genes_MT<span class="sc">$</span>Gene.name <span class="sc">%in%</span> <span class="fu">rownames</span>(obj_seurat),<span class="st">&#39;Gene.name&#39;</span>]</span>
+<span id="cb6-6"><a href="data-pre-processing.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(features) <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb6-7"><a href="data-pre-processing.html#cb6-7" aria-hidden="true" tabindex="-1"></a>    obj_seurat[[<span class="st">&quot;percent_MT&quot;</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(obj_seurat,</span>
+<span id="cb6-8"><a href="data-pre-processing.html#cb6-8" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">features =</span> features)</span>
+<span id="cb6-9"><a href="data-pre-processing.html#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(genes_MT<span class="sc">$</span>Gene.name)</span>
+<span id="cb6-10"><a href="data-pre-processing.html#cb6-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-11"><a href="data-pre-processing.html#cb6-11" aria-hidden="true" tabindex="-1"></a>    obj_seurat[[<span class="st">&quot;percent_MT&quot;</span>]] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb6-12"><a href="data-pre-processing.html#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>##  [1] &quot;ATP6&quot;   &quot;ATP6&quot;   &quot;COII&quot;   &quot;CYTB&quot;   &quot;CYTB&quot;   &quot;ATP8&quot;   &quot;ATP8&quot;   &quot;COX3&quot;  
+##  [9] &quot;ND1&quot;    &quot;MT-ND2&quot; &quot;MT-CO1&quot; &quot;ND3&quot;    &quot;ND4L&quot;   &quot;ND4&quot;    &quot;ND5&quot;    &quot;ND6&quot;</code></pre>
+</div>
+<div id="ribosomal-genes" class="section level4" number="2.1.1.2">
+<h4><span class="header-section-number">2.1.1.2</span> Ribosomal genes</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-pre-processing.html#cb8-1" aria-hidden="true" tabindex="-1"></a>obj_seurat[[<span class="st">&#39;percent_Ribo&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(obj_seurat,</span>
+<span id="cb8-2"><a href="data-pre-processing.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                                                     <span class="at">pattern =</span> <span class="st">&quot;^RP[SL]&quot;</span>)</span></code></pre></div>
+</div>
+<div id="blood-associated-genes" class="section level4" number="2.1.1.3">
+<h4><span class="header-section-number">2.1.1.3</span> Blood associated genes</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-pre-processing.html#cb9-1" aria-hidden="true" tabindex="-1"></a>obj_seurat[[<span class="st">&#39;percent_Hb&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">PercentageFeatureSet</span>(obj_seurat,</span>
+<span id="cb9-2"><a href="data-pre-processing.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">pattern =</span> <span class="st">&quot;^HB[^(P)]&quot;</span>)</span></code></pre></div>
+</div>
+<div id="percent-of-zeros-in-each-cell" class="section level4" number="2.1.1.4">
+<h4><span class="header-section-number">2.1.1.4</span> Percent of zeros in each cell</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-pre-processing.html#cb10-1" aria-hidden="true" tabindex="-1"></a>obj_seurat[[<span class="st">&#39;percent_Dropouts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">colSums</span>(obj_counts <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">/</span> <span class="fu">nrow</span>(obj_counts)<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+</div>
+</div>
+<div id="features-metrics" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Features metrics</h3>
+<p>We now store genes metadata (e.g. number of cells in which the gene is detected, percent of zero counts, etc.) in the Seurat object.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-pre-processing.html#cb11-1" aria-hidden="true" tabindex="-1"></a>obj_counts <span class="ot">&lt;-</span> obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>counts</span>
+<span id="cb11-2"><a href="data-pre-processing.html#cb11-2" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;nCells_detected&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obj_counts <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb11-3"><a href="data-pre-processing.html#cb11-3" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;percentCells_detected&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obj_counts <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">/</span> <span class="fu">ncol</span>(obj_counts)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb11-4"><a href="data-pre-processing.html#cb11-4" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;total_counts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obj_counts)</span>
+<span id="cb11-5"><a href="data-pre-processing.html#cb11-5" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;log10_total_counts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">rowSums</span>(obj_counts))</span>
+<span id="cb11-6"><a href="data-pre-processing.html#cb11-6" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;mean_counts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(obj_counts)</span>
+<span id="cb11-7"><a href="data-pre-processing.html#cb11-7" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;log10_mean_counts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">log10</span>(<span class="fu">rowMeans</span>(obj_counts))</span>
+<span id="cb11-8"><a href="data-pre-processing.html#cb11-8" aria-hidden="true" tabindex="-1"></a>obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[[<span class="st">&#39;percent_Dropouts&#39;</span>]] <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(obj_counts <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">/</span> <span class="fu">ncol</span>(obj_counts)<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+</div>
+</div>
+<div id="plot-qc-metrics" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Plot QC metrics</h2>
+<div id="cells-metrics-1" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Cells metrics</h3>
+<div id="violin-plots" class="section level4" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Violin plots</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-pre-processing.html#cb12-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;nFeature_RNA&quot;</span>, <span class="st">&quot;nCount_RNA&quot;</span>, <span class="st">&quot;percent_MT&quot;</span>,</span>
+<span id="cb12-2"><a href="data-pre-processing.html#cb12-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;percent_Ribo&quot;</span>, <span class="st">&quot;percent_Hb&quot;</span>, <span class="st">&quot;percent_Dropouts&quot;</span>)</span>
+<span id="cb12-3"><a href="data-pre-processing.html#cb12-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(obj_seurat<span class="sc">@</span>meta.data[, metrics])</span>
+<span id="cb12-4"><a href="data-pre-processing.html#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="data-pre-processing.html#cb12-5" aria-hidden="true" tabindex="-1"></a>plots_colors <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">6</span>, <span class="st">&quot;Dark2&quot;</span>)</span>
+<span id="cb12-6"><a href="data-pre-processing.html#cb12-6" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb12-7"><a href="data-pre-processing.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb12-8"><a href="data-pre-processing.html#cb12-8" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="fu">factor</span>(<span class="dv">0</span>), <span class="at">y =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="data-pre-processing.html#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">fill =</span> plots_colors[i], <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="data-pre-processing.html#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">outlier.size =</span> <span class="fl">0.5</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="data-pre-processing.html#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> metrics[i]) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="data-pre-processing.html#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb12-13"><a href="data-pre-processing.html#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span>
+<span id="cb12-14"><a href="data-pre-processing.html#cb12-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-15"><a href="data-pre-processing.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/cells-metrics-violins-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="histograms" class="section level4" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> Histograms</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-pre-processing.html#cb13-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb13-2"><a href="data-pre-processing.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb13-3"><a href="data-pre-processing.html#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(metrics[i])</span>
+<span id="cb13-4"><a href="data-pre-processing.html#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">summary</span>(obj[,metrics[i]]))</span>
+<span id="cb13-5"><a href="data-pre-processing.html#cb13-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(obj[,metrics[i]])</span>
+<span id="cb13-6"><a href="data-pre-processing.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="data-pre-processing.html#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="at">fill =</span> plots_colors[i], <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="data-pre-processing.html#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> metrics[i]) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="data-pre-processing.html#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="data-pre-processing.html#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span>
+<span id="cb13-11"><a href="data-pre-processing.html#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot;nFeature_RNA&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       6    3704    4141    4176    4617    8788 
+## [1] &quot;nCount_RNA&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       6   15506   18929   20568   23574  154755 
+## [1] &quot;percent_MT&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00   10.99   12.21   12.86   13.82   68.97 
+## [1] &quot;percent_Ribo&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00   18.45   20.04   20.14   22.07   37.36 
+## [1] &quot;percent_Hb&quot;
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.00000  0.03057  0.04210  0.26867  0.05671 60.19746 
+## [1] &quot;percent_Dropouts&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   54.59   76.16   78.62   78.43   80.87   99.97</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-pre-processing.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/cells-metrics-histograms-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ngenes-against-ncounts" class="section level4" number="2.2.1.3">
+<h4><span class="header-section-number">2.2.1.3</span> nGenes against nCounts</h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-pre-processing.html#cb16-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb16-2"><a href="data-pre-processing.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb16-3"><a href="data-pre-processing.html#cb16-3" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&quot;nCount_RNA&quot;</span>,</span>
+<span id="cb16-4"><a href="data-pre-processing.html#cb16-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y =</span> <span class="st">&quot;nFeature_RNA&quot;</span>,</span>
+<span id="cb16-5"><a href="data-pre-processing.html#cb16-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="data-pre-processing.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="data-pre-processing.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_rug</span>(<span class="at">sides =</span><span class="st">&quot;bl&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="data-pre-processing.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rainbow</span>(<span class="dv">3</span>))</span>
+<span id="cb16-9"><a href="data-pre-processing.html#cb16-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-10"><a href="data-pre-processing.html#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/cells-metrics-ngenes-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="genes-metrics" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Genes metrics</h3>
+<div id="violin-plots-1" class="section level4" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> Violin plots</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-pre-processing.html#cb17-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;nCells_detected&quot;</span>, <span class="st">&quot;percentCells_detected&quot;</span>, <span class="st">&quot;total_counts&quot;</span>, <span class="st">&quot;log10_total_counts&quot;</span>,</span>
+<span id="cb17-2"><a href="data-pre-processing.html#cb17-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;mean_counts&quot;</span>, <span class="st">&quot;log10_mean_counts&quot;</span>, <span class="st">&quot;percent_Dropouts&quot;</span>)</span>
+<span id="cb17-3"><a href="data-pre-processing.html#cb17-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features[, metrics])</span>
+<span id="cb17-4"><a href="data-pre-processing.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="data-pre-processing.html#cb17-5" aria-hidden="true" tabindex="-1"></a>plots_colors <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">7</span>, <span class="st">&quot;Dark2&quot;</span>)</span>
+<span id="cb17-6"><a href="data-pre-processing.html#cb17-6" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb17-7"><a href="data-pre-processing.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb17-8"><a href="data-pre-processing.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="fu">factor</span>(<span class="dv">0</span>), <span class="at">y =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="data-pre-processing.html#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">fill =</span> plots_colors[i], <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="data-pre-processing.html#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">outlier.size =</span> <span class="fl">0.5</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="data-pre-processing.html#cb17-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> metrics[i]) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="data-pre-processing.html#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="data-pre-processing.html#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span>
+<span id="cb17-14"><a href="data-pre-processing.html#cb17-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-15"><a href="data-pre-processing.html#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/genes-metrics-violins-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="histograms-1" class="section level4" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> Histograms</h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-pre-processing.html#cb18-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb18-2"><a href="data-pre-processing.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb18-3"><a href="data-pre-processing.html#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(metrics[i])</span>
+<span id="cb18-4"><a href="data-pre-processing.html#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">summary</span>(obj[,metrics[i]]))</span>
+<span id="cb18-5"><a href="data-pre-processing.html#cb18-5" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> <span class="fu">mean</span>(obj[,metrics[i]])</span>
+<span id="cb18-6"><a href="data-pre-processing.html#cb18-6" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="data-pre-processing.html#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_histogram</span>(<span class="at">fill =</span> plots_colors[i], <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="data-pre-processing.html#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> metrics[i]) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="data-pre-processing.html#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mu, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="data-pre-processing.html#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-11"><a href="data-pre-processing.html#cb18-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot;nCells_detected&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     1.0    16.0   186.0   583.7  1005.0  2479.0 
+## [1] &quot;percentCells_detected&quot;
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.04031  0.64490  7.49698 23.52747 40.50786 99.91939 
+## [1] &quot;total_counts&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       2      17     212    2875    1507  949448 
+## [1] &quot;log10_total_counts&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.301   1.230   2.326   2.235   3.178   5.977 
+## [1] &quot;mean_counts&quot;
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##   0.0008   0.0069   0.0854   1.1588   0.6074 382.6876 
+## [1] &quot;log10_mean_counts&quot;
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -3.0936 -2.1642 -1.0683 -1.1596 -0.2165  2.5828 
+## [1] &quot;percent_Dropouts&quot;
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  0.08061 59.49214 92.50302 76.47253 99.35510 99.95969</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-pre-processing.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/genes-metrics-histograms-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ncells-against-ncounts" class="section level4" number="2.2.2.3">
+<h4><span class="header-section-number">2.2.2.3</span> nCells against nCounts</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-pre-processing.html#cb21-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;percent_Dropouts&quot;</span>)</span>
+<span id="cb21-2"><a href="data-pre-processing.html#cb21-2" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb21-3"><a href="data-pre-processing.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(metrics))) {</span>
+<span id="cb21-4"><a href="data-pre-processing.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    plots[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(obj, <span class="fu">aes_string</span>(<span class="at">x =</span> <span class="st">&quot;log10_total_counts&quot;</span>,</span>
+<span id="cb21-5"><a href="data-pre-processing.html#cb21-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">y =</span> <span class="st">&quot;nCells_detected&quot;</span>,</span>
+<span id="cb21-6"><a href="data-pre-processing.html#cb21-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">color =</span> metrics[i])) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="data-pre-processing.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="data-pre-processing.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_rug</span>(<span class="at">sides =</span><span class="st">&quot;bl&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="data-pre-processing.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_colour_gradientn</span>(<span class="at">colours =</span> <span class="fu">rev</span>(<span class="fu">rainbow</span>(<span class="dv">3</span>)))</span>
+<span id="cb21-10"><a href="data-pre-processing.html#cb21-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-11"><a href="data-pre-processing.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, plots)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/genes-metrics-ngenes-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="highly-expressed-genes" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Highly expressed genes</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="data-pre-processing.html#cb22-1" aria-hidden="true" tabindex="-1"></a>obj_sce <span class="ot">&lt;-</span> <span class="fu">as.SingleCellExperiment</span>(obj_seurat)</span>
+<span id="cb22-2"><a href="data-pre-processing.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="data-pre-processing.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHighestExprs</span>(obj_sce,</span>
+<span id="cb22-4"><a href="data-pre-processing.html#cb22-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n =</span> <span class="dv">50</span>,</span>
+<span id="cb22-5"><a href="data-pre-processing.html#cb22-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exprs_values =</span> <span class="st">&quot;counts&quot;</span>,</span>
+<span id="cb22-6"><a href="data-pre-processing.html#cb22-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour_cells_by =</span> <span class="st">&quot;percent_MT&quot;</span>,</span>
+<span id="cb22-7"><a href="data-pre-processing.html#cb22-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">as_percentage =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="scRNA-seq-analyses-report_files/figure-html/genes-highly-expressed-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="filter-data" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Filter data</h2>
+<div id="cells-filtering" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Cells filtering</h3>
+<div id="by-number-of-detected-genes" class="section level4" number="2.3.1.1">
+<h4><span class="header-section-number">2.3.1.1</span> By number of detected genes</h4>
+<p>For the sake of simplicity, we keep cells in which we detect at least 1000 genes.
+We use the same threshold for all the datasets.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-pre-processing.html#cb23-1" aria-hidden="true" tabindex="-1"></a>md_cells <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(obj_seurat<span class="sc">@</span>meta.data)</span>
+<span id="cb23-2"><a href="data-pre-processing.html#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="data-pre-processing.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(md_cells<span class="sc">$</span>nFeature_RNA <span class="sc">&gt;=</span> <span class="dv">1000</span>)</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##     3  2478</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-pre-processing.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(md_cells<span class="sc">$</span>nFeature_RNA, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.01</span>))</span></code></pre></div>
+<pre><code>##     0%     1%     2%     3%     4%     5% 
+##    6.0 2160.2 2619.8 2804.2 2935.0 3040.0</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-pre-processing.html#cb27-1" aria-hidden="true" tabindex="-1"></a>cells_keep <span class="ot">&lt;-</span> <span class="fu">WhichCells</span>(obj_seurat, <span class="at">expression =</span> nFeature_RNA <span class="sc">&gt;=</span> <span class="dv">1000</span>)</span>
+<span id="cb27-2"><a href="data-pre-processing.html#cb27-2" aria-hidden="true" tabindex="-1"></a>obj_filt <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj_seurat, <span class="at">cells =</span> cells_keep)</span></code></pre></div>
+<p>There are 2478 remaining cells.</p>
+</div>
+<div id="by-mitochondrial-genes" class="section level4" number="2.3.1.2">
+<h4><span class="header-section-number">2.3.1.2</span> By mitochondrial genes</h4>
+<p>We here remove cells that express 20% or more of mitochondrial genes compared to the total number of genes detected in each of them.
+We chose the 20% threshold due to the distribution observed above.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-pre-processing.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(md_cells<span class="sc">$</span>percent_MT <span class="sc">&lt;</span> <span class="dv">20</span>)</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##    75  2406</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-pre-processing.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(md_cells<span class="sc">$</span>percent_MT, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.01</span>))</span></code></pre></div>
+<pre><code>##      90%      91%      92%      93%      94%      95%      96%      97% 
+## 15.70165 15.91113 16.19067 16.64139 17.04488 17.71955 18.47223 20.09899 
+##      98%      99%     100% 
+## 23.77213 31.67336 68.96623</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-pre-processing.html#cb32-1" aria-hidden="true" tabindex="-1"></a>cells_keep <span class="ot">&lt;-</span> <span class="fu">WhichCells</span>(obj_filt, <span class="at">expression =</span> percent_MT <span class="sc">&lt;</span> <span class="dv">20</span>)</span>
+<span id="cb32-2"><a href="data-pre-processing.html#cb32-2" aria-hidden="true" tabindex="-1"></a>obj_filt <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj_filt, <span class="at">cells =</span> cells_keep)</span></code></pre></div>
+<p>There are 2404 remaining cells.</p>
+</div>
+<div id="remove-blood-cells" class="section level4" number="2.3.1.3">
+<h4><span class="header-section-number">2.3.1.3</span> Remove blood cells</h4>
+<p>Blood cells are outliers in this dataset, so we need to remove them.
+For this purpose, we remove cells in which we detect 0.1% or more of blood associated genes (i.e. hemoglobin genes).</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-pre-processing.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(md_cells<span class="sc">$</span>percent_Hb <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##    70  2411</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-pre-processing.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(md_cells<span class="sc">$</span>percent_Hb, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.01</span>))</span></code></pre></div>
+<pre><code>##         90%         91%         92%         93%         94%         95% 
+##  0.07375175  0.07567897  0.07803725  0.08010904  0.08222058  0.08593834 
+##         96%         97%         98%         99%        100% 
+##  0.09268938  0.09796861  0.11256679  0.15596915 60.19746475</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-pre-processing.html#cb37-1" aria-hidden="true" tabindex="-1"></a>cells_keep <span class="ot">&lt;-</span> <span class="fu">WhichCells</span>(obj_filt, <span class="at">expression =</span> percent_Hb <span class="sc">&lt;</span> <span class="fl">0.1</span>)</span>
+<span id="cb37-2"><a href="data-pre-processing.html#cb37-2" aria-hidden="true" tabindex="-1"></a>obj_filt <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj_filt, <span class="at">cells =</span> cells_keep)</span></code></pre></div>
+<p>There are 2353 remaining cells.</p>
+</div>
+</div>
+<div id="genes-filtering" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Genes filtering</h3>
+<p>Finally, we filter the genes that are detected in less than 5 cells.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-pre-processing.html#cb38-1" aria-hidden="true" tabindex="-1"></a>min_genes <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb38-2"><a href="data-pre-processing.html#cb38-2" aria-hidden="true" tabindex="-1"></a>min_cells <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb38-3"><a href="data-pre-processing.html#cb38-3" aria-hidden="true" tabindex="-1"></a>features_keep <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rowSums</span>(obj_counts[<span class="fu">rowSums</span>(obj_counts) <span class="sc">&gt;=</span> min_genes,] <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">&gt;=</span> min_cells)</span>
+<span id="cb38-4"><a href="data-pre-processing.html#cb38-4" aria-hidden="true" tabindex="-1"></a>obj_filt <span class="ot">&lt;-</span> <span class="fu">subset</span>(obj_filt, <span class="at">features =</span> features_keep)</span></code></pre></div>
+<p>Finally, there are 2353 remaining cells and 15680 remaining genes.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-pre-processing.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(obj_seurat,</span>
+<span id="cb39-2"><a href="data-pre-processing.html#cb39-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/rds/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_obj_seurat_unfiltered.rds&quot;</span>))</span>
+<span id="cb39-3"><a href="data-pre-processing.html#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="data-pre-processing.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save metadata on cells</span></span>
+<span id="cb39-5"><a href="data-pre-processing.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(obj_seurat[[]],</span>
+<span id="cb39-6"><a href="data-pre-processing.html#cb39-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/raw/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_cells_metadata_unfiltered.tsv&quot;</span>),</span>
+<span id="cb39-7"><a href="data-pre-processing.html#cb39-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb39-8"><a href="data-pre-processing.html#cb39-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb39-9"><a href="data-pre-processing.html#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Save metadata on genes</span></span>
+<span id="cb39-10"><a href="data-pre-processing.html#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(obj_seurat<span class="sc">@</span>assays<span class="sc">$</span>RNA<span class="sc">@</span>meta.features,</span>
+<span id="cb39-11"><a href="data-pre-processing.html#cb39-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">&quot;data/raw/&quot;</span>, params<span class="sc">$</span>gtf, <span class="st">&quot;_genes_metadata_unfiltered.tsv&quot;</span>),</span>
+<span id="cb39-12"><a href="data-pre-processing.html#cb39-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb39-13"><a href="data-pre-processing.html#cb39-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-pre-processing.html#cb40-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> obj_filt</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-analyses.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
