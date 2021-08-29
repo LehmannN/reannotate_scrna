@@ -24,7 +24,7 @@
 <meta name="author" content="Nathalie Lehmann" />
 
 
-<meta name="date" content="2021-08-28" />
+<meta name="date" content="2021-08-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,15 +177,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="data-analyses.html"><a href="data-analyses.html#identify-populations"><i class="fa fa-check"></i><b>3.2</b> Identify populations</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="data-analyses.html"><a href="data-analyses.html#get-stats-on-some-marker-genes"><i class="fa fa-check"></i><b>3.2.1</b> Get stats on some marker genes</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-analyses.html"><a href="data-analyses.html#plot-each-marker-genes"><i class="fa fa-check"></i><b>3.2.2</b> Plot each marker genes</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-analyses.html"><a href="data-analyses.html#plot-umap-of-marker-genes"><i class="fa fa-check"></i><b>3.2.2</b> Plot UMAP of marker genes</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-analyses.html"><a href="data-analyses.html#classify-cells-based-on-known-markers"><i class="fa fa-check"></i><b>3.2.3</b> Classify cells based on known markers</a></li>
 <li class="chapter" data-level="3.2.4" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-status-depending-on-sox2-expression"><i class="fa fa-check"></i><b>3.2.4</b> Assign cell status depending on SOX2 expression</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="data-analyses.html"><a href="data-analyses.html#assign-cell-cycle-scores"><i class="fa fa-check"></i><b>3.3</b> Assign cell-cycle scores</a></li>
 <li class="chapter" data-level="3.4" data-path="data-analyses.html"><a href="data-analyses.html#summary-plots"><i class="fa fa-check"></i><b>3.4</b> Summary plots</a></li>
-<li class="chapter" data-level="3.5" data-path="data-analyses.html"><a href="data-analyses.html#second-normalization-step"><i class="fa fa-check"></i><b>3.5</b> Second normalization step</a></li>
+<li class="chapter" data-level="3.5" data-path="data-analyses.html"><a href="data-analyses.html#biological-analysis"><i class="fa fa-check"></i><b>3.5</b> Biological analysis</a></li>
 <li class="chapter" data-level="3.6" data-path="data-analyses.html"><a href="data-analyses.html#find-variable-genes"><i class="fa fa-check"></i><b>3.6</b> Find variable genes</a></li>
-<li class="chapter" data-level="3.7" data-path="data-analyses.html"><a href="data-analyses.html#clustering"><i class="fa fa-check"></i><b>3.7</b> Clustering</a></li>
+<li class="chapter" data-level="3.7" data-path="data-analyses.html"><a href="data-analyses.html#clustering"><i class="fa fa-check"></i><b>3.7</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="data-analyses.html"><a href="data-analyses.html#plot-marker-genes-for-each-cluster"><i class="fa fa-check"></i><b>3.7.1</b> Plot marker genes for each cluster</a></li>
+</ul></li>
 <li class="chapter" data-level="3.8" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-clusters"><i class="fa fa-check"></i><b>3.8</b> Find DE genes between clusters</a></li>
 <li class="chapter" data-level="3.9" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-subtypes"><i class="fa fa-check"></i><b>3.9</b> Find DE genes between subtypes</a></li>
 <li class="chapter" data-level="3.10" data-path="data-analyses.html"><a href="data-analyses.html#find-de-genes-between-sox2-and-sox2--populations"><i class="fa fa-check"></i><b>3.10</b> Find DE genes between SOX2+ and SOX2- populations</a></li>
@@ -219,7 +222,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="data-pre-processing.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
 <span id="cb1-7"><a href="data-pre-processing.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
 <span id="cb1-8"><a href="data-pre-processing.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-9"><a href="data-pre-processing.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SC3)</span></code></pre></div>
+<span id="cb1-9"><a href="data-pre-processing.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code></pre></div>
 <p>We start by loading the Seurat object stored as a <code>RDS</code> object.
 It contains all the single-cell data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-pre-processing.html#cb2-1" aria-hidden="true" tabindex="-1"></a>obj_seurat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> params<span class="sc">$</span>rds)</span>

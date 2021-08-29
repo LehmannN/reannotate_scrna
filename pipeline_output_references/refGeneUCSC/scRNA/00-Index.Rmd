@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 					  fig.retina = 2,
 					  fig.fullwidth = TRUE,
 					  dev = c('png', 'pdf'),
-					  cache = TRUE,
+					  cache = FALSE,
 					  cache.lazy = FALSE,
 					  warning = FALSE,
 					  message = FALSE,

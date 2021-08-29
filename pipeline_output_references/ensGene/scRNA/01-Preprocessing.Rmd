@@ -9,7 +9,7 @@ library(RColorBrewer)
 library(cowplot)
 library(viridis)
 library(scales)
-library(SC3)
+library(ggthemes)
 ```
 
 We start by loading the Seurat object stored as a `RDS` object.

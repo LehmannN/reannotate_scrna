@@ -41,7 +41,8 @@ We will also define various colors palette for all the coming analyses.
 colors_pal1 <- as.vector(yarrr::piratepal("appletv", plot.result = FALSE, trans = 0)[c(3,1,6)])
 colors_pal2 <- as.vector(brewer.pal(n = 4, name = "Dark2"))
 colors_pal3 <- as.vector(brewer.pal(n = 9, name = "Paired"))
-colors_pal4 <- as.vector(yarrr::piratepal("basel", plot.result = FALSE, trans = 0.1)[1:9])
+colors_pal4 <- ggthemes_data[["tableau"]][["color-palettes"]][["regular"]][["Classic 20"]]
+colors_pal4 <- as.vector(colors_pal4$value)
 colors_pal <- list(Phase = colors_pal1,
 				   Cell_type = colors_pal2,
 				   Cell_subtype = colors_pal3,
@@ -49,7 +50,7 @@ colors_pal <- list(Phase = colors_pal1,
 names(colors_pal[[1]]) <- c('G1', 'G2M', 'S')
 names(colors_pal[[2]]) <- c('Progenitor', 'Neuron', 'Neural_crest', 'Mesoderm')
 names(colors_pal[[3]]) <- c('RP', 'dp', 'p', 'pMN', 'p3', 'FP', 'Neuron', 'Neural_crest', 'Mesoderm')
-names(colors_pal[[4]]) <- paste0('clust_', 1:9)
+names(colors_pal[[4]]) <- paste0('clust_', 1:20)
 
 # Save color palettes
 write.table(obj_seurat[[]],
@@ -107,7 +108,7 @@ DT::datatable(md_genes[features,],
 ```
 
 
-### Plot each marker genes
+### Plot UMAP of marker genes
 
 ```{r markers-genes-plots}
 plots <- list()
@@ -415,7 +416,7 @@ ggplot(obj_seurat[[]], aes_string(x = 'orig.ident', fill = x)) +
 	labs(x = "", y = "", title = "Proportion of SOX2+ / SOX2- cells")
 ```
 
-## Second normalization step
+## Biological analysis
 From now-on, the data of the previous normalization will not be used anymore.
 It was a quick and basic normalization used only to pre-process the data.
 For the next steps, we will use an improved (but more time-consuming) normalization strategy with SCTransform.
@@ -442,9 +443,8 @@ plot2
 
 
 ## Clustering
-We use SC3 to cluster the cells so we can use the same k for all the analyses (the number of clusters in Seurat are defined by the resolution and can vary).
 
-```{r clustering-sc3}
+```{r clustering-sc3, eval=FALSE, echo=FALSE}
 # Run SC3
 obj_sce <- as.SingleCellExperiment(obj_seurat)
 rowData(obj_sce)$feature_symbol <- rownames(obj_sce)
@@ -463,6 +463,7 @@ sc3_plot_silhouette(obj_sce, k = num_k)
 
 # Put SC3 results inside Seurat object
 obj_seurat@meta.data$sc3_9_clusters <- colData(obj_sce)$sc3_9_clusters
+Idents(obj_seurat) <- 'sc3_9_clusters'
 DimPlot(obj_seurat,
 		reduction = "umap",
 		dims = c(1, 2),
@@ -473,18 +474,93 @@ DimPlot(obj_seurat,
 		pt.size = 0.2)
 ```
 
+We cluster the cells based on Louvain algorithm.
+We set the clustering resolution to 0.5 for all the samples for comparison purposes.
+
+```{r clustering}
+obj_seurat <- RunPCA(obj_seurat, verbose = FALSE) %>%
+    RunUMAP(dims = 1:npc, verbose = FALSE) %>%
+    FindNeighbors(dims = 1:npc) %>%
+    FindClusters(resolution = 0.5)
+
+
+Idents(obj_seurat) <- 'seurat_clusters'
+
+DimPlot(obj_seurat,
+        reduction = "umap",
+        dims = c(1, 2),
+        group.by = "seurat_clusters",
+        cols = as.vector(colors_pal$Clusters),
+        label = FALSE,
+        label.size = 4,
+        pt.size = 0.2)
+```
+
+### Plot marker genes for each cluster
+
+```{r clusters-vln-markers}
+plots <- list()
+for (i in seq(1, length(features))) {
+    plots[[i]] <- VlnPlot(obj_seurat,
+                      features = features[i],
+                      cols = as.vector(colors_pal$Clusters),
+                      pt.size = 0.2,
+                      ncol = 1,
+                      slot = "counts",
+                      log = TRUE) + NoLegend()
+}
+for (i in seq(1, length(features), 2)) {
+    if (c(i+1) <= length(features)) {
+        do.call(grid.arrange, c(plots[i:c(i+1)], ncol = 1, nrow = 2))
+    } else {
+        do.call(grid.arrange, c(plots[i:length(features)], ncol = 1, nrow = 2))
+    }
+}
+```
+
+```{r clusters-novel-umap-signatures}
+for (f in names(markers_genes)){
+    print(FeaturePlot(obj_seurat,
+                      features = f,
+                      dims = c(1, 2),
+                      cols = c("grey90", brewer.pal(9,"YlGnBu")),
+                      pt.size = 0.2,
+                      ncol = 1) + NoLegend())
+}
+```
+
+```{r clusters-novel-umap-genes}
+plots <- list()
+for (i in seq(1, length(features))) {
+    plots[[i]] <- FeaturePlot(obj_seurat,
+                      features = features[i],
+                      cols = c("grey90", rev(brewer.pal(5, "Spectral"))),
+                      pt.size = 0.2,
+                      ncol = 1) + NoLegend()
+}
+for (i in seq(1, length(features), 4)) {
+    if (c(i+3) <= length(features)) {
+        do.call(grid.arrange, c(plots[i:c(i+3)], ncol = 2, nrow = 2))
+    } else {
+        do.call(grid.arrange, c(plots[i:length(features)], ncol = 2, nrow = 2))
+    }
+}
+```
+
+
+
 Here are the contingency tables to visualize how many cells from the different cell types are in each cluster.
 ```{r}
 cont_table_n <- obj_seurat@meta.data %>%
-	group_by(Cell_subtype, sc3_9_clusters) %>%
+	group_by(Cell_subtype, seurat_clusters) %>%
 	summarise(n = n()) %>%
 	tidyr::spread(Cell_subtype, n)
 
 cont_table_prop <- obj_seurat@meta.data %>%
-	group_by(Cell_subtype, sc3_9_clusters) %>%
+	group_by(Cell_subtype, seurat_clusters) %>%
 	summarise(n = n()) %>%
 	mutate(prop = n/sum(n)) %>%
-	subset(select = c("Cell_subtype","sc3_9_clusters","prop")) %>%
+	subset(select = c("Cell_subtype","seurat_clusters","prop")) %>%
 	tidyr::spread(Cell_subtype, prop)
 
 DT::datatable(cont_table_n,
@@ -511,7 +587,7 @@ DT::datatable(cont_table_prop,
 ## Find DE genes between clusters
 
 ```{r find-de-clusters}
-Idents(obj_seurat) <- 'sc3_9_clusters'
+Idents(obj_seurat) <- 'seurat_clusters'
 markers_DE <- FindAllMarkers(obj_seurat,
 							 only.pos = TRUE,
 							 min.pct = 0.25,
@@ -527,7 +603,7 @@ top10 <- markers_DE %>%
 DoHeatmap(obj_seurat,
 		  features = top10$gene,
 		  label = FALSE) +
-	theme(axis.text.y = element_text(size = 5))
+	theme(axis.text.y = element_text(size = 3))
 ```
 
 ```{r, eval=FALSE, echo=FALSE}
@@ -568,7 +644,7 @@ top10 <- markers_Subtype %>%
 DoHeatmap(obj_seurat,
 		  features = top10$gene,
 		  label = FALSE) +
-	theme(axis.text.y = element_text(size = 5))
+	theme(axis.text.y = element_text(size = 4))
 ```
 
 ## Find DE genes between SOX2+ and SOX2- populations
