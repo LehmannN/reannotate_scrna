@@ -6,7 +6,7 @@
 
 | Step | Tool | Input | Output |
 | -------- | -------- | -------- | -------- |
-| 1. Construct novel annotation | [StringTie2](https://ccb.jhu.edu/software/stringtie/) <br> [Scallop](https://github.com/Kingsford-Group/scallop) <br> [groHMM](https://www.bioconductor.org/packages/release/bioc/html/groHMM.html) <br> scAnnotatiONT  | `BAM` <br> `GTF` | `GTF` |
+| 1. Construct novel annotation | [StringTie2](https://ccb.jhu.edu/software/stringtie/) <br> [Scallop](https://github.com/Kingsford-Group/scallop)  | `BAM` <br> `GTF` | `GTF` |
 | 2. Merge novel and reference annotations | [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/) | `GTF` | `GTF` |
 | 3. Compare novel annotations with reference | [GffCompare](https://ccb.jhu.edu/software/stringtie/gffcompare.shtml) | `GTF` | `summary.txt` |
 | 4. Extract more statistics from novel annotation | Rscript | `GTF` | `report_stats_annotation.txt` |
